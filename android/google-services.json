@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1090812402785",
+    "project_id": "hairshop-jk",
+    "storage_bucket": "hairshop-jk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090812402785:android:b06a4360dfa6b7e4e05e20",
+        "android_client_info": {
+          "package_name": "com.jkhair.iksun.hair"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090812402785-f31ur42lqlb5evqol3k4pa1o8egu2o6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-cabiohjho3nquV5IZhU3wWZyd4z9h-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090812402785-f31ur42lqlb5evqol3k4pa1o8egu2o6u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1090812402785-c9bpu6qhniphshgogmp9vu5ram7d3upd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jkhair.iksun.hair"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
