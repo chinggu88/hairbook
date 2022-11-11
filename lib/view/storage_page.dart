@@ -55,8 +55,18 @@ class Storage_page extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(icon: Icon(Icons.abc), label: '홈'),
-        BottomNavigationBarItem(icon: Icon(Icons.abc), label: '예약현황'),
+        BottomNavigationBarItem(
+            icon: IconButton(
+              icon: Icon(Icons.abc),
+              onPressed: () => Get.offNamed(storage),
+            ),
+            label: '홈'),
+        BottomNavigationBarItem(
+            icon: IconButton(
+              icon: Icon(Icons.abc),
+              onPressed: () => Get.offNamed(book),
+            ),
+            label: '예약현황'),
         BottomNavigationBarItem(icon: Icon(Icons.abc), label: '정보'),
       ]),
     );

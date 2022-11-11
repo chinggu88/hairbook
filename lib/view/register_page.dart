@@ -41,16 +41,11 @@ class RegisterPage extends StatelessWidget {
                     height: 100,
                     color: Colors.blue,
                   ),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.black,
-                  ),
                 ],
               ),
               SizedBox(
                 height: 50,
-              )
+              ),
             ],
           ),
         ),

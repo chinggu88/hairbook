@@ -47,6 +47,7 @@ dependencies:
   flutter_web_auth: ^0.4.1
   flutterfire_cli: 0.2.7
   crypto: ^3.0.1
+  table_calendar: ^3.0.8
   
 dev_dependencies:
   flutter_test:

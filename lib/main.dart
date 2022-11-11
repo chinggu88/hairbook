@@ -5,6 +5,7 @@ import 'package:hair/const/appPage.dart';
 import 'package:hair/controller/login_controller.dart';
 import 'package:hair/controller/register_controller.dart';
 import 'package:hair/firebase_options.dart';
+import 'package:hair/view/book/book_page.dart';
 import 'package:hair/view/login_page.dart';
 import 'package:hair/view/register_page.dart';
 import 'package:hair/view/storage_page.dart';
@@ -16,7 +17,7 @@ void main() {
         options: DefaultFirebaseOptions.currentPlatform,
       );
     },
-    initialRoute: login,
+    initialRoute: storage,
     getPages: [
       GetPage(
           name: login,
@@ -35,6 +36,12 @@ void main() {
           page: () => const RegisterPage(),
           binding: BindingsBuilder(() {
             Get.put(RegisterController());
+          })),
+      GetPage(
+          name: book,
+          page: () => BookPage(),
+          binding: BindingsBuilder(() {
+            // Get.put(RegisterController());
           })),
     ],
   ));

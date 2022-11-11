@@ -8,3 +8,6 @@ String storage = '/storage';
 
 ///예약페이지
 String register = '/register';
+
+///예약현황
+String book = '/book';
