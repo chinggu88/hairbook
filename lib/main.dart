@@ -9,40 +9,43 @@ import 'package:hair/view/book/book_page.dart';
 import 'package:hair/view/login_page.dart';
 import 'package:hair/view/register_page.dart';
 import 'package:hair/view/storage_page.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 void main() {
-  runApp(GetMaterialApp(
-    onInit: () async {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-    },
-    initialRoute: storage,
-    getPages: [
-      GetPage(
-          name: login,
-          page: () => const Login_page(),
-          binding: BindingsBuilder(() {
-            Get.put(LoginController(), permanent: true);
-          })),
-      GetPage(
-          name: storage,
-          page: () => const Storage_page(),
-          binding: BindingsBuilder(() {
-            // Get.put(Splash_controller(), permanent: true);
-          })),
-      GetPage(
-          name: register,
-          page: () => const RegisterPage(),
-          binding: BindingsBuilder(() {
-            Get.put(RegisterController());
-          })),
-      GetPage(
-          name: book,
-          page: () => BookPage(),
-          binding: BindingsBuilder(() {
-            // Get.put(RegisterController());
-          })),
-    ],
-  ));
+  initializeDateFormatting().then((_) => runApp(GetMaterialApp(
+        onInit: () async {
+          await Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          );
+          Intl.defaultLocale = 'ko_KR';
+        },
+        initialRoute: storage,
+        getPages: [
+          GetPage(
+              name: login,
+              page: () => const Login_page(),
+              binding: BindingsBuilder(() {
+                Get.put(LoginController(), permanent: true);
+              })),
+          GetPage(
+              name: storage,
+              page: () => const Storage_page(),
+              binding: BindingsBuilder(() {
+                // Get.put(Splash_controller(), permanent: true);
+              })),
+          GetPage(
+              name: register,
+              page: () => RegisterPage(),
+              binding: BindingsBuilder(() {
+                Get.put(RegisterController());
+              })),
+          GetPage(
+              name: book,
+              page: () => BookPage(),
+              binding: BindingsBuilder(() {
+                // Get.put(RegisterController());
+              })),
+        ],
+      )));
 }

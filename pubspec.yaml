@@ -38,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   kakao_flutter_sdk_user: ^1.2.2
-  firebase_core: ^2.1.0
+  firebase_core: ^2.0.0
   cloud_firestore: ^4.0.2
   firebase_auth: ^4.0.2
   google_sign_in: ^5.4.2
@@ -48,6 +48,7 @@ dependencies:
   flutterfire_cli: 0.2.7
   crypto: ^3.0.1
   table_calendar: ^3.0.8
+  intl: ^0.17.0
   
 dev_dependencies:
   flutter_test:
