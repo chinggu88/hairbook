@@ -31,6 +31,7 @@ void main() {
           GetPage(
               name: storage,
               page: () => const Storage_page(),
+              transition: Transition.noTransition,
               binding: BindingsBuilder(() {
                 // Get.put(Splash_controller(), permanent: true);
               })),
@@ -43,6 +44,7 @@ void main() {
           GetPage(
               name: book,
               page: () => BookPage(),
+              transition: Transition.noTransition,
               binding: BindingsBuilder(() {
                 // Get.put(RegisterController());
               })),
