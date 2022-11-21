@@ -27,29 +27,141 @@ class RegisterPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('헤어종류'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Text('선생님'),
+              Column(
                 children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.red,
-                    child: Text('커트'),
+                  SizedBox(
+                    height: 20,
                   ),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.orange,
-                    child: Text('펌'),
-                  ),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.blue,
-                    child: Text('염색'),
-                  ),
+                  Obx(() {
+                    return Container(
+                      width: Get.size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () =>
+                                controller.selectvalue('managerName', '김아무개'),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Container(
+                                child: Text('김아무개'),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: controller
+                                                  .regitvalue['managerName'] ==
+                                              '김아무개'
+                                          ? Colors.black
+                                          : Colors.white,
+                                      width: 5),
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () =>
+                                controller.selectvalue('managerName', '이아무개'),
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Container(
+                                child: Text('이아무개'),
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: controller
+                                                  .regitvalue['managerName'] ==
+                                              '이아무개'
+                                          ? Colors.black
+                                          : Colors.white,
+                                      width: 5),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  }),
                 ],
+              ),
+              Text('헤어종류'),
+              Obx(
+                () {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () => controller.selectvalue('typename', '커트'),
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          child: Center(
+                              child: Text(
+                            '커트',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: controller.regitvalue['typename'] == '커트'
+                                    ? Colors.black
+                                    : Colors.white,
+                                width: 5),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => controller.selectvalue('typename', '펌'),
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          child: Center(
+                              child: Text(
+                            '펌',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                          decoration: BoxDecoration(
+                            color: Colors.purple,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: controller.regitvalue['typename'] == '펌'
+                                    ? Colors.black
+                                    : Colors.white,
+                                width: 5),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => controller.selectvalue('typename', '염색'),
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          child: Center(
+                              child: Text(
+                            '염색',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                          decoration: BoxDecoration(
+                            color: Colors.teal,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: controller.regitvalue['typename'] == '염색'
+                                    ? Colors.black
+                                    : Colors.white,
+                                width: 5),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               SizedBox(
                 height: 50,
@@ -158,6 +270,7 @@ class RegisterPage extends StatelessWidget {
                         );
                       },
                       selectedBuilder: (context, dateTime, focusedDay) {
+                        log('asdf ${dateTime} ${focusedDay}');
                         return Stack(
                           clipBehavior: Clip.none,
                           children: [
@@ -193,84 +306,13 @@ class RegisterPage extends StatelessWidget {
                 },
               ),
               Obx(() {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                        color: controller.permittime[0]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('09:00')),
-                    Container(
-                        color: controller.permittime[1]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('10:00')),
-                    Container(
-                        color: controller.permittime[2]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('11:00')),
-                    Container(
-                        color: controller.permittime[3]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('12:00'))
-                  ],
-                );
-              }),
-              Obx(() {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                        color: controller.permittime[4]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('13:00')),
-                    Container(
-                        color: controller.permittime[5]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('14:00')),
-                    Container(
-                        color: controller.permittime[6]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('15:00')),
-                    Container(
-                        color: controller.permittime[7]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('16:00'))
-                  ],
-                );
-              }),
-              Obx(() {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                        color: controller.permittime[8]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('17:00')),
-                    Container(
-                        color: controller.permittime[9]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('18:00')),
-                    Container(
-                        color: controller.permittime[10]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('19:00')),
-                    Container(
-                        color: controller.permittime[11]
-                            ? Colors.grey
-                            : Colors.white,
-                        child: Text('20:00'))
-                  ],
+                return Container(
+                  height: 300,
+                  child: GridView.count(
+                    childAspectRatio: 1.5,
+                    crossAxisCount: 3,
+                    children: Schecdulelist(controller.test!),
+                  ),
                 );
               }),
               SizedBox(
@@ -282,5 +324,42 @@ class RegisterPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  ///등록 상세내역
+  List<Widget> Schecdulelist(Map<DateTime, List<Map<String, dynamic>>> event) {
+    List<Widget> reWidget = [];
+    for (int i = 0; i < controller.regittime.length; i++) {
+      reWidget.add(GestureDetector(
+        onTap: () => controller.selectvalue("time", controller.regittime[i]),
+        child: Container(
+          decoration: BoxDecoration(
+            color: controller.permittime[i] ? Colors.grey : Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+                color: controller.regitvalue['time'] ==
+                        controller.regittime[i].toString()
+                    ? Colors.black
+                    : Colors.white,
+                width: 5),
+          ),
+          child: Column(
+            children: [
+              Text(controller.regittime[i].toString()),
+              if (controller.permittime[i]) ...[
+                Text(controller.test![controller.selectDate]![0]['typename']
+                    .toString()),
+                Text(controller.test![controller.selectDate]![0]['managerName']
+                    .toString()),
+                Text(controller.test![controller.selectDate]![0]['confirm']
+                    .toString()),
+              ]
+            ],
+          ),
+        ),
+      ));
+    }
+
+    return reWidget;
   }
 }

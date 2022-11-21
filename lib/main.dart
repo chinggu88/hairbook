@@ -5,7 +5,6 @@ import 'package:hair/common/bindings/initbinds.dart';
 import 'package:hair/common/const/appPage.dart';
 import 'package:hair/controller/login_controller.dart';
 import 'package:hair/controller/register_controller.dart';
-import 'package:hair/firebase_options.dart';
 import 'package:hair/view/book/book_page.dart';
 import 'package:hair/view/login_page.dart';
 import 'package:hair/view/register_page.dart';
@@ -18,7 +17,7 @@ Future<void> main() async {
         onInit: () async {
           Intl.defaultLocale = 'ko_KR';
         },
-        initialRoute: login,
+        initialRoute: storage,
         initialBinding: initbinding(),
         getPages: [
           GetPage(

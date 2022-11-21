@@ -12,6 +12,7 @@ class RegisterController extends GetxController {
   DateTime get selectDate => _selectDate.value;
   set selectDate(DateTime value) => _selectDate.value = value;
 
+  ///예약가능 여부 시간 순
   final RxList<bool> _permittime = <bool>[
     false,
     false,
@@ -29,8 +30,28 @@ class RegisterController extends GetxController {
   List<bool> get permittime => _permittime.value;
   set permittime(List<bool> value) => _permittime.assignAll(value);
 
-  // RxBool bb = false.obs;
-  List<String> aa = ['asdf', 'asdf', 'asdf'];
+  ///등록가능한 올타임
+  final RxList<String> _regittime = <String>[
+    "09:00:00",
+    "10:00:00",
+    "11:00:00",
+    "12:00:00",
+    "13:00:00",
+    "14:00:00",
+    "15:00:00",
+    "16:00:00",
+    "17:00:00",
+    "18:00:00",
+    "18:00:00",
+    "20:00:00",
+  ].obs;
+
+  List<String> get regittime => _regittime.value;
+  set regittime(List<String> value) => _regittime.assignAll(value);
+
+  ///등록 내용
+  RxMap<String, dynamic> regitvalue = <String, dynamic>{}.obs;
+
   RxMap events = <DateTime, List<Map<String, dynamic>>>{}.obs;
   Map<DateTime, List<Map<String, dynamic>>>? test = {
     DateTime.utc(2022, 11, 15): [
@@ -40,7 +61,7 @@ class RegisterController extends GetxController {
         "typeCode": "01",
         "phone": "01022049564",
         "managerName": "아무개",
-        "ManageCode": "01",
+        "managerCode": "01",
         "confirm": "N"
       },
       {
@@ -49,7 +70,7 @@ class RegisterController extends GetxController {
         "typeCode": "01",
         "phone": "01022049564",
         "managerName": "아무개",
-        "ManageCode": "01",
+        "managerCode": "01",
         "confirm": "N"
       },
       {
@@ -58,7 +79,7 @@ class RegisterController extends GetxController {
         "typeCode": "02",
         "phone": "01022049564",
         "managerName": "아무개",
-        "ManageCode": "01",
+        "managerCode": "01",
         "confirm": "N"
       },
       {
@@ -67,18 +88,11 @@ class RegisterController extends GetxController {
         "typeCode": "02",
         "phone": "01022049564",
         "managerName": "아무개",
-        "ManageCode": "01",
+        "managerCode": "01",
         "confirm": "N"
       },
     ],
   };
-  //   String? _time;
-  // String? _typeName;
-  // String? _typeCode;
-  // String? _phone;
-  // String? _managerName;
-  // String? _managerCode;
-  // String? _confirm;
 
   @override
   void onReady() {
@@ -86,62 +100,37 @@ class RegisterController extends GetxController {
     super.onReady();
   }
 
+  ///등록데이터 갱신
   void permitregister(DateTime date) {
     List<bool> temp = [];
     if (test![date] != null) {
-      test![date]?.indexWhere((e) => e['time'] == '09:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '10:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '11:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '12:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '13:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '14:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '15:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '16:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '17:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '18:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '19:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
-      test![date]?.indexWhere((e) => e['time'] == '20:00:00') == -1
-          ? temp.add(false)
-          : temp.add(true);
+      for (int i = 0; i < regittime.length; i++) {
+        test![date]?.indexWhere((e) => e['time'] == regittime[i]) == -1
+            ? temp.add(false)
+            : temp.add(true);
+      }
     } else {
-      temp = [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false
-      ];
+      for (int i = 0; i < regittime.length; i++) {
+        temp.add(false);
+      }
     }
     _permittime.assignAll(temp);
-    log(_permittime.toList().toString());
+  }
+
+  ///클릭한 예약 내역
+  void selectvalue(String title, String value) {
+    regitvalue[title] = value;
+    if (value == '커트') {
+      regitvalue['typeCode'] = '01';
+    } else if (value == '펌') {
+      regitvalue['typeCode'] = '02';
+    } else if (value == '염색') {
+      regitvalue['typeCode'] = '03';
+    } else if (value == '김아무개') {
+      regitvalue['managerCode'] = '01';
+    } else if (value == '이아무개') {
+      regitvalue['managerCode'] = '02';
+    }
+    log('selectvalue ${regitvalue}');
   }
 }

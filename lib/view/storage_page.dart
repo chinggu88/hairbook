@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair/common/const/appPage.dart';
@@ -9,51 +11,17 @@ class Storage_page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 100,
-            ),
-            Container(
-              width: Get.size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(register);
-                    },
-                    child: SizedBox(
-                      width: 100,
-                      height: 100,
-                      child: Container(
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(register);
-                    },
-                    child: SizedBox(
-                      width: 100,
-                      height: 100,
-                      child: Container(
-                        color: Colors.blueAccent,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 100,
-            ),
-          ],
-        ),
-      ),
+      body: GestureDetector(
+          onVerticalDragStart: (details) {
+            // log(details.toString());
+          },
+          onHorizontalDragUpdate: (details) {
+            log(details.toString());
+          },
+          child: Container(
+              color: Colors.red,
+              height: 400,
+              child: Center(child: Text('여약하기')))),
       bottomNavigationBar: BottomNavigationBar(items: [
         BottomNavigationBarItem(
             icon: IconButton(
