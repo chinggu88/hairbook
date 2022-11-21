@@ -47,7 +47,12 @@ class RegisterPage extends StatelessWidget {
                               width: 100,
                               height: 100,
                               child: Container(
-                                child: Text('김아무개'),
+                                child: Center(
+                                  child: Text(
+                                    '김아무개',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
                                 decoration: BoxDecoration(
                                   color: Colors.blue,
                                   borderRadius: BorderRadius.circular(20),
@@ -69,7 +74,11 @@ class RegisterPage extends StatelessWidget {
                               width: 100,
                               height: 100,
                               child: Container(
-                                child: Text('이아무개'),
+                                child: Center(
+                                    child: Text(
+                                  '이아무개',
+                                  style: TextStyle(color: Colors.white),
+                                )),
                                 decoration: BoxDecoration(
                                   color: Colors.redAccent,
                                   borderRadius: BorderRadius.circular(20),
@@ -163,9 +172,9 @@ class RegisterPage extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(
-                height: 50,
-              ),
+              // SizedBox(
+              //   height: 50,
+              // ),
               Text('시간대 설정'),
               Obx(
                 () {
@@ -307,18 +316,16 @@ class RegisterPage extends StatelessWidget {
               ),
               Obx(() {
                 return Container(
-                  height: 300,
+                  height: 230,
                   child: GridView.count(
-                    childAspectRatio: 1.5,
+                    childAspectRatio: 1.6,
                     crossAxisCount: 3,
                     children: Schecdulelist(controller.test!),
                   ),
                 );
               }),
-              SizedBox(
-                height: 40,
-              ),
-              Text('확인버튼')
+              GestureDetector(
+                  onTap: () => controller.setregiter(), child: Text('확인버튼'))
             ],
           ),
         ),
@@ -331,7 +338,13 @@ class RegisterPage extends StatelessWidget {
     List<Widget> reWidget = [];
     for (int i = 0; i < controller.regittime.length; i++) {
       reWidget.add(GestureDetector(
-        onTap: () => controller.selectvalue("time", controller.regittime[i]),
+        onTap: () {
+          if (!controller.permittime[i]) {
+            controller.selectvalue("time", controller.regittime[i]);
+          } else {
+            Get.snackbar('주의', '이미 예약이 존재합니다.');
+          }
+        },
         child: Container(
           decoration: BoxDecoration(
             color: controller.permittime[i] ? Colors.grey : Colors.white,

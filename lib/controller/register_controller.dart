@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:developer';
 
 import 'package:get/get.dart';
@@ -42,7 +41,7 @@ class RegisterController extends GetxController {
     "16:00:00",
     "17:00:00",
     "18:00:00",
-    "18:00:00",
+    "19:00:00",
     "20:00:00",
   ].obs;
 
@@ -132,5 +131,20 @@ class RegisterController extends GetxController {
       regitvalue['managerCode'] = '02';
     }
     log('selectvalue ${regitvalue}');
+  }
+
+  ///등록api보내기
+  void setregiter() {
+    regitvalue['userName'] = '이강훈';
+    regitvalue['phoneNum'] = '010-2204-9564';
+    if (regitvalue['managerCode'] == null) {
+      Get.snackbar('주의', '선생님을 선택해주세요');
+    } else if (regitvalue['typeCode'] == null) {
+      Get.snackbar('주의', '종류를 선택해주세요');
+    } else if (regitvalue['time'] == null) {
+      Get.snackbar('주의', '시간을 선택해주세요');
+    }
+    log(regitvalue.length.toString());
+    log('[등록api][setregiter] 등록밸류 value ${regitvalue}');
   }
 }

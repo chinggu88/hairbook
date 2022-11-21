@@ -12,16 +12,19 @@ class Storage_page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-          onVerticalDragStart: (details) {
-            // log(details.toString());
+          onHorizontalDragEnd: (details) {
+            log('end hori ${details.primaryVelocity}');
+            if (details.primaryVelocity! < 0.0) {
+              Get.toNamed(register);
+            }
           },
-          onHorizontalDragUpdate: (details) {
-            log(details.toString());
-          },
-          child: Container(
-              color: Colors.red,
-              height: 400,
-              child: Center(child: Text('여약하기')))),
+          child: Center(
+              child: Image.asset(
+            'images/main/testmain.jpg',
+            width: Get.size.width,
+            height: Get.size.height,
+            fit: BoxFit.fill,
+          ))),
       bottomNavigationBar: BottomNavigationBar(items: [
         BottomNavigationBarItem(
             icon: IconButton(
