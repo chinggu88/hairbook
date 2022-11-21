@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hair/const/appPage.dart';
+import 'package:hair/common/const/appPage.dart';
 import 'package:hair/view/common/scafford_page.dart';
 
 class Storage_page extends StatelessWidget {

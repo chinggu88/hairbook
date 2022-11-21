@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hair/const/appPage.dart';
+import 'package:hair/common/const/appPage.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BookPage extends StatelessWidget {

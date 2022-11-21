@@ -63,7 +63,7 @@ class RegisterPage extends StatelessWidget {
                     locale: 'ko_KR',
                     //캘린더 높이
                     daysOfWeekHeight: 30,
-                    focusedDay: DateTime.now(),
+                    focusedDay: controller.onclick.value,
                     firstDay: DateTime(DateTime.now().year,
                         DateTime.now().month - 3, DateTime.now().day),
                     lastDay: DateTime(
@@ -75,7 +75,11 @@ class RegisterPage extends StatelessWidget {
                     calendarFormat: CalendarFormat.week,
                     //캘린더 선택시
                     onDaySelected: ((selectedDay, focusedDay) {
-                      controller.onclick.value = focusedDay;
+                      print('adsf $selectedDay $focusedDay');
+                      controller.onclick.value = selectedDay;
+                      controller.selectDate = DateTime.utc(
+                          selectedDay.year, selectedDay.month, selectedDay.day);
+                      controller.permitregister(selectedDay);
                     }),
                     selectedDayPredicate: (day) {
                       return controller.onclick.value == day;
@@ -87,17 +91,13 @@ class RegisterPage extends StatelessWidget {
                     //캘린더 스케줄
                     eventLoader: (day) {
                       return controller.test![day] ?? [];
-                      // return [];
                     },
-
                     calendarStyle: const CalendarStyle(
                       markersMaxCount: 0,
-                      todayDecoration: const BoxDecoration(
-                          color: const Color(0xFF5C6BC0),
-                          shape: BoxShape.rectangle),
-                      selectedDecoration: const BoxDecoration(
-                          color: const Color(0xFF5C6BC0),
-                          shape: BoxShape.rectangle),
+                      todayDecoration: BoxDecoration(
+                          color: Color(0xFF5C6BC0), shape: BoxShape.rectangle),
+                      selectedDecoration: BoxDecoration(
+                          color: Color(0xFF5C6BC0), shape: BoxShape.rectangle),
                     ),
                     calendarBuilders: CalendarBuilders(
                       todayBuilder: (context, dateTime, focusedDay) {
@@ -105,9 +105,18 @@ class RegisterPage extends StatelessWidget {
                           clipBehavior: Clip.none,
                           children: [
                             Center(
+                                child: Container(
+                              width: 50,
+                              height: 40,
+                              color: Colors.amberAccent,
+                              child: Center(
                                 child: Text(
-                              dateTime.day.toString(),
-                              style: TextStyle(fontSize: 20),
+                                  dateTime.day.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
                             )),
                             controller.test![dateTime] != null
                                 ? Container(
@@ -183,33 +192,87 @@ class RegisterPage extends StatelessWidget {
                   );
                 },
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text('09:00'),
-                  Text('10:00'),
-                  Text('11:00'),
-                  Text('12:00')
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text('13:00'),
-                  Text('14:00'),
-                  Text('15:00'),
-                  Text('16:00')
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text('17:00'),
-                  Text('18:00'),
-                  Text('19:00'),
-                  Text('20:00')
-                ],
-              ),
+              Obx(() {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        color: controller.permittime[0]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('09:00')),
+                    Container(
+                        color: controller.permittime[1]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('10:00')),
+                    Container(
+                        color: controller.permittime[2]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('11:00')),
+                    Container(
+                        color: controller.permittime[3]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('12:00'))
+                  ],
+                );
+              }),
+              Obx(() {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        color: controller.permittime[4]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('13:00')),
+                    Container(
+                        color: controller.permittime[5]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('14:00')),
+                    Container(
+                        color: controller.permittime[6]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('15:00')),
+                    Container(
+                        color: controller.permittime[7]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('16:00'))
+                  ],
+                );
+              }),
+              Obx(() {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        color: controller.permittime[8]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('17:00')),
+                    Container(
+                        color: controller.permittime[9]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('18:00')),
+                    Container(
+                        color: controller.permittime[10]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('19:00')),
+                    Container(
+                        color: controller.permittime[11]
+                            ? Colors.grey
+                            : Colors.white,
+                        child: Text('20:00'))
+                  ],
+                );
+              }),
               SizedBox(
                 height: 40,
               ),
