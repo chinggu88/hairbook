@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair/common/const/appPage.dart';
+import 'package:hair/controller/app_controller.dart';
 
 class Scaffoldhair extends StatelessWidget {
   Scaffoldhair(
@@ -30,20 +31,34 @@ class Scaffoldhair extends StatelessWidget {
       appBar: showappbar ? appbartitle(appbar) : null,
       body: widgetbody,
       bottomNavigationBar: showbottomnavigation
-          ? BottomNavigationBar(items: [
+          ? BottomNavigationBar(currentIndex: AppController.to.index, items: [
               BottomNavigationBarItem(
                   icon: IconButton(
                     icon: Icon(Icons.abc),
-                    onPressed: () => Get.offNamed(home),
+                    onPressed: () {
+                      AppController.to.index = 0;
+                      Get.offNamed(home);
+                    },
                   ),
                   label: '홈'),
               BottomNavigationBarItem(
                   icon: IconButton(
                     icon: Icon(Icons.abc),
-                    onPressed: () => Get.offNamed(book),
+                    onPressed: () {
+                      AppController.to.index = 1;
+                      Get.offNamed(book);
+                    },
                   ),
                   label: '예약현황'),
-              BottomNavigationBarItem(icon: Icon(Icons.abc), label: '정보'),
+              BottomNavigationBarItem(
+                  icon: IconButton(
+                    icon: Icon(Icons.abc),
+                    onPressed: () {
+                      AppController.to.index = 2;
+                      Get.offNamed(profile);
+                    },
+                  ),
+                  label: '정보'),
             ])
           : null,
     );

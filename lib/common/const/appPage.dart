@@ -11,3 +11,6 @@ String register = '/register';
 
 ///예약현황
 String book = '/book';
+
+///프로필
+String profile = '/profile';

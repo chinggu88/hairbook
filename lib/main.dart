@@ -7,11 +7,13 @@ import 'package:hair/common/bindings/initbinds.dart';
 import 'package:hair/common/const/appPage.dart';
 import 'package:hair/controller/home_controller.dart';
 import 'package:hair/controller/login_controller.dart';
+import 'package:hair/controller/profile_controller.dart';
 import 'package:hair/controller/register_controller.dart';
 import 'package:hair/view/book/book_page.dart';
 import 'package:hair/view/home/register_page.dart';
-import 'package:hair/view/home/main_page.dart';
+import 'package:hair/view/home/home_page.dart';
 import 'package:hair/view/login_page.dart';
+import 'package:hair/view/profile/profile_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +22,7 @@ Future<void> main() async {
         onInit: () async {
           Intl.defaultLocale = 'ko_KR';
         },
-        initialRoute: login,
+        initialRoute: home,
         initialBinding: initbinding(),
         getPages: [
           GetPage(
@@ -31,7 +33,7 @@ Future<void> main() async {
               })),
           GetPage(
               name: home,
-              page: () => const Main_page(),
+              page: () => const Home_page(),
               transition: Transition.noTransition,
               binding: BindingsBuilder(() {
                 Get.put(homeController());
@@ -48,6 +50,13 @@ Future<void> main() async {
               transition: Transition.noTransition,
               binding: BindingsBuilder(() {
                 // Get.put(RegisterController());
+              })),
+          GetPage(
+              name: profile,
+              page: () => Profile_page(),
+              transition: Transition.noTransition,
+              binding: BindingsBuilder(() {
+                Get.put(ProfileController());
               })),
         ],
       )));

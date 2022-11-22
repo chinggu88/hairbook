@@ -6,8 +6,8 @@ import 'package:hair/common/const/appPage.dart';
 import 'package:hair/controller/home_controller.dart';
 import 'package:hair/view/common/scafford_page.dart';
 
-class Main_page extends GetView<homeController> {
-  const Main_page({super.key});
+class Home_page extends GetView<homeController> {
+  const Home_page({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffoldhair(

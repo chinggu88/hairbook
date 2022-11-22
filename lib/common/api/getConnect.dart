@@ -13,10 +13,10 @@ class Getconnect {
   ///POST방식 통신 내부 서버 통신(개발중)
   static Future<Map<String, dynamic>> getApi(String url, Map body) async {
     Map<String, dynamic> returnmodel = {};
-    log('asdf ${AppController.to.serverurl.value + url}');
+    log('asdf ${AppController.to.serverurl + url}');
     try {
       final response =
-          await _connect.post(AppController.to.serverurl.value + url, body);
+          await _connect.post(AppController.to.serverurl + url, body);
 
       if (response.statusCode == 200) {
         Map<String, dynamic> responseMap = jsonDecode(response.body);

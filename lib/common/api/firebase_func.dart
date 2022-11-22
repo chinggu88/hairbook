@@ -18,7 +18,7 @@ Future<void> getserverUrl() async {
     log('[Firebasefunc][getserverUrl] data ${data}');
     if (data!.isNotEmpty) {
       askUrl = data['serverurl'] as String;
-      AppController.to.serverurl.value = askUrl;
+      AppController.to.serverurl = askUrl;
       log('asdf [getserverUrl]${AppController.to.serverurl} ');
     }
   } catch (e) {

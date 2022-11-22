@@ -43,7 +43,6 @@ class LoginController extends GetxController {
       log('[Login][signInWithGoogle] displayName : ${user.user!.displayName}');
       log('[Login][signInWithGoogle] phoneNumber : ${user.user!.phoneNumber}');
       log('[Login][signInWithGoogle] photoURL : ${user.user!.photoURL}');
-      log('[Login][signInWithGoogle] photoURL : ${user.toString()}');
       log('[Login][signInWithGoogle] ---------------------------------------------------------------------------------------------');
       // testapi();
       Get.offNamed(home);
