@@ -29,7 +29,7 @@ class BookPage extends StatelessWidget {
         BottomNavigationBarItem(
             icon: IconButton(
               icon: Icon(Icons.abc),
-              onPressed: () => Get.offNamed(storage),
+              onPressed: () => Get.offNamed(home),
             ),
             label: '홈'),
         BottomNavigationBarItem(

@@ -4,7 +4,7 @@ import 'package:get/get_utils/get_utils.dart';
 String login = '/login';
 
 /// 로그인 페이지
-String storage = '/storage';
+String home = '/main';
 
 ///예약페이지
 String register = '/register';
