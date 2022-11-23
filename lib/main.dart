@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair/common/bindings/initbinds.dart';
 import 'package:hair/common/const/appPage.dart';
+import 'package:hair/common/util/shared_preference.dart';
 import 'package:hair/controller/home_controller.dart';
 import 'package:hair/controller/login_controller.dart';
 import 'package:hair/controller/profile_controller.dart';
@@ -22,7 +23,7 @@ Future<void> main() async {
         onInit: () async {
           Intl.defaultLocale = 'ko_KR';
         },
-        initialRoute: home,
+        initialRoute: login,
         initialBinding: initbinding(),
         getPages: [
           GetPage(

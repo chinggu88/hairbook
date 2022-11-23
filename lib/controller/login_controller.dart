@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hair/common/api/api_call.dart';
 import 'package:hair/common/const/appPage.dart';
-import 'package:hair/main.dart';
+import 'package:hair/common/util/shared_preference.dart';
+import 'package:intl/intl.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:uuid/uuid.dart';
@@ -20,9 +21,8 @@ class LoginController extends GetxController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    // if (isAutologin.value) {
-    //   await signInWithGoogle();
-    // }
+    await pref.init();
+    autologin();
   }
 
   ///Google 소셜 로그인용 코드
@@ -43,9 +43,31 @@ class LoginController extends GetxController {
       log('[Login][signInWithGoogle] displayName : ${user.user!.displayName}');
       log('[Login][signInWithGoogle] phoneNumber : ${user.user!.phoneNumber}');
       log('[Login][signInWithGoogle] photoURL : ${user.user!.photoURL}');
+      log('[Login][signInWithGoogle] uid : ${user.user!.uid}');
+      log('[Login][signInWithGoogle] photoURL : ${user.user!.toString()}');
       log('[Login][signInWithGoogle] ---------------------------------------------------------------------------------------------');
-      // testapi();
-      Get.offNamed(home);
+      Map<String, dynamic> temp = {
+        "id": user.user!.email,
+        "name": user.user!.displayName,
+        "fcmkey": "",
+        "phone": "",
+        "type": "0",
+        "photoURL": user.user!.photoURL,
+        "uid": user.user!.uid,
+        "insertdate":
+            DateFormat("yyyy-MM-DD HH:mm:SS").format(DateTime.now()).toString(),
+        "updatedate":
+            DateFormat("yyyy-MM-DD HH:mm:SS").format(DateTime.now()).toString(),
+      };
+      calllogin('/login', temp).then((value) async {
+        if (value) {
+          //로그인 데이터 저장
+          await pref.writePref<String>("id", user.user!.email!);
+          await pref.writePref<String>("uid", user.user!.uid);
+          //홈화면으로 이동
+          Get.offNamed(home);
+        }
+      });
     } catch (error) {
       log('', error: '[Login][signInWithGoogle] Error Message : $error');
       return false;
@@ -153,6 +175,25 @@ class LoginController extends GetxController {
             error: '[Login][signInWithKakao] Error Message : $error');
         return false;
       }
+    }
+  }
+
+  ///자동로그인
+  Future<void> autologin() async {
+    //아이디랑 uid 정보가 있을때
+    if (pref.readPref<String>('id', '') != '' &&
+        pref.readPref<String>('uid', '') != '') {
+      Map<String, dynamic> body = {
+        "id": pref.readPref<String>('id', ''),
+        "uid": pref.readPref<String>('uid', '')
+      };
+      log('asdfasdf ${body}');
+      callloginfo('/logininfo', body).then((value) {
+        if (value) {
+          ///로그인정보 확인
+          Get.offNamed(home);
+        }
+      });
     }
   }
 }

@@ -10,23 +10,42 @@ class Getconnect {
     ..baseUrl = ''
     ..timeout = const Duration(seconds: 10);
 
-  ///POST방식 통신 내부 서버 통신(개발중)
-  static Future<Map<String, dynamic>> getApi(String url, Map body) async {
+  ///GET방식 통신 내부 서버 통신
+  static Future<Map<String, dynamic>> getApi(String url) async {
     Map<String, dynamic> returnmodel = {};
-    log('asdf ${AppController.to.serverurl + url}');
     try {
-      final response =
-          await _connect.post(AppController.to.serverurl + url, body);
+      final response = await _connect.get(AppController.to.serverurl + url);
 
       if (response.statusCode == 200) {
         Map<String, dynamic> responseMap = jsonDecode(response.body);
       } else {
         log('',
             error:
-                '[RESTAPI][nongsaro_Get] Error Message : 통신오류 error code = ${response.statusCode}  error text = ${response.statusText}');
+                '[RESTAPI][getApi] Error Message : 통신오류 error code = ${response.statusCode}  error text = ${response.statusText}');
       }
     } catch (e) {
-      log('', error: '[RESTAPI][nongsaro_Get] Error Message : ${e.toString()}');
+      log('', error: '[RESTAPI][getApi] Error Message : ${e.toString()}');
+    }
+    return returnmodel;
+  }
+
+  ///POST방식 통신 내부 서버 통신
+  static Future<Map<String, dynamic>> postApi(
+      String url, Map<String, dynamic> body) async {
+    Map<String, dynamic> returnmodel = {};
+    try {
+      final response =
+          await _connect.post(AppController.to.serverurl + url, body);
+
+      if (response.statusCode == 200) {
+        returnmodel = response.body;
+      } else {
+        log('',
+            error:
+                '[RESTAPI][postApi] Error Message : 통신오류 error code = ${response.statusCode}  error text = ${response.statusText}');
+      }
+    } catch (e) {
+      log('', error: '[RESTAPI][postApi] Error Message : ${e.toString()}');
     }
     return returnmodel;
   }

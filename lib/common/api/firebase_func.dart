@@ -19,7 +19,6 @@ Future<void> getserverUrl() async {
     if (data!.isNotEmpty) {
       askUrl = data['serverurl'] as String;
       AppController.to.serverurl = askUrl;
-      log('asdf [getserverUrl]${AppController.to.serverurl} ');
     }
   } catch (e) {
     log('', error: '[Firebasefunc][getserverUrl] error value ${e.toString()}');

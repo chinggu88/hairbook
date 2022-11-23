@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:hair/common/api/firebase_func.dart';
 
 class homeController extends GetxController {
   static homeController get to => Get.find<homeController>();
@@ -10,7 +11,7 @@ class homeController extends GetxController {
 
   Timer? _timer;
   @override
-  void onReady() {
+  Future<void> onReady() async {
     // TODO: implement onReady
     super.onReady();
     setanimation();

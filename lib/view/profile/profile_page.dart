@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:hair/view/common/scafford_page.dart';
 
 class Profile_page extends StatelessWidget {
@@ -9,10 +7,27 @@ class Profile_page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffoldhair(
-      widgetbody: Center(
-          child: Text(
-        '프로필 화면입니다.',
-      )),
-    );
+        widgetbody: Column(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Container(
+            child: CircleAvatar(
+              // child: Image.network(
+              //   'https://cdn.imweb.me/thumbnail/20221024/1c7b541efd331.jpg',
+              // ),
+              radius: 100,
+              backgroundColor: Colors.black,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            color: Colors.blueAccent,
+          ),
+        ),
+      ],
+    ));
   }
 }
