@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:hair/common/api/api_call.dart';
+import 'package:hair/controller/app_controller.dart';
 
 class RegisterController extends GetxController {
   static RegisterController get to => Get.find<RegisterController>();
@@ -135,8 +137,12 @@ class RegisterController extends GetxController {
 
   ///등록api보내기
   void setregiter() {
-    regitvalue['userName'] = '이강훈';
-    regitvalue['phoneNum'] = '010-2204-9564';
+    regitvalue['id'] = AppController.to.user.id;
+    regitvalue['name'] = AppController.to.user.name;
+    regitvalue['phone'] = AppController.to.user.phone ?? "";
+
+    ///예약 승인
+    regitvalue['confirm'] = 'N';
     if (regitvalue['managerCode'] == null) {
       Get.snackbar('주의', '선생님을 선택해주세요');
     } else if (regitvalue['typeCode'] == null) {
@@ -144,7 +150,15 @@ class RegisterController extends GetxController {
     } else if (regitvalue['time'] == null) {
       Get.snackbar('주의', '시간을 선택해주세요');
     }
-    log(regitvalue.length.toString());
     log('[등록api][setregiter] 등록밸류 value ${regitvalue}');
+    callregister('/register', regitvalue).then((value) {
+      if (value) {
+        ///로그인정보 확인
+        // Get.offNamed(home);
+        Get.snackbar('성공', '예약성공');
+      } else {
+        Get.snackbar('실패', '예약실패');
+      }
+    });
   }
 }

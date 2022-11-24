@@ -35,3 +35,18 @@ Future<bool> callloginfo(String url, Map<String, dynamic> body) async {
     return false;
   }
 }
+
+///예약하기
+Future<bool> callregister(String url, Map<String, dynamic> body) async {
+  try {
+    Map<String, dynamic> res = await Getconnect.postApi(url, body);
+    if (res.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    log('', error: '[api_call][calllogin] error value ${e.toString()}');
+    return false;
+  }
+}

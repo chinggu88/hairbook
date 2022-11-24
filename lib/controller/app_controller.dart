@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hair/common/api/firebase_func.dart';
-import 'package:hair/common/util/shared_preference.dart';
 import 'package:hair/firebase_options.dart';
 import 'package:hair/model/user_model.dart';
 
@@ -22,6 +22,9 @@ class AppController extends GetxController {
   Rx<User> _user = User().obs;
   User get user => _user.value;
   set user(User value) => _user.value = value;
+
+  ///내부 데이터 저장
+  final storage = GetStorage();
 
   @override
   Future<void> onInit() async {

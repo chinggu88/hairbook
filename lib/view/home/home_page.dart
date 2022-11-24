@@ -17,8 +17,6 @@ class Home_page extends GetView<homeController> {
       widgetbody: GestureDetector(
           onTap: () {
             controller.anistart = !controller.anistart;
-            Map<String, dynamic> temp = {"id": 11, "text": "text"};
-            calllogin('/logintest', temp);
           },
           onHorizontalDragEnd: (details) {
             if (details.primaryVelocity! < 0.0) {
@@ -34,7 +32,14 @@ class Home_page extends GetView<homeController> {
               fit: BoxFit.fill,
             )),
             Center(
-              child: Text('${AppController.to.user.id}'),
+              child: Column(
+                children: [
+                  Text('${AppController.to.user.id}'),
+                  Text('${AppController.to.user.uid}'),
+                  Text('${AppController.to.user.fcmkey}'),
+                  Text('${AppController.to.user.name}'),
+                ],
+              ),
             )
             // Obx(
             //   () => AnimatedPositioned(

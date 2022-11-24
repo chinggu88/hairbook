@@ -131,7 +131,7 @@ class RegisterPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         GestureDetector(
-          onTap: () => controller.selectvalue('typename', '커트'),
+          onTap: () => controller.selectvalue('typeName', '커트'),
           child: Container(
             width: 100,
             height: 100,
@@ -144,7 +144,7 @@ class RegisterPage extends StatelessWidget {
               color: Colors.orange,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                  color: controller.regitvalue['typename'] == '커트'
+                  color: controller.regitvalue['typeName'] == '커트'
                       ? Colors.black
                       : Colors.white,
                   width: 5),
@@ -152,7 +152,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => controller.selectvalue('typename', '펌'),
+          onTap: () => controller.selectvalue('typeName', '펌'),
           child: Container(
             width: 100,
             height: 100,
@@ -165,7 +165,7 @@ class RegisterPage extends StatelessWidget {
               color: Colors.purple,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                  color: controller.regitvalue['typename'] == '펌'
+                  color: controller.regitvalue['typeName'] == '펌'
                       ? Colors.black
                       : Colors.white,
                   width: 5),
@@ -173,7 +173,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => controller.selectvalue('typename', '염색'),
+          onTap: () => controller.selectvalue('typeName', '염색'),
           child: Container(
             width: 100,
             height: 100,
@@ -186,7 +186,7 @@ class RegisterPage extends StatelessWidget {
               color: Colors.teal,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                  color: controller.regitvalue['typename'] == '염색'
+                  color: controller.regitvalue['typeName'] == '염색'
                       ? Colors.black
                       : Colors.white,
                   width: 5),
@@ -297,7 +297,6 @@ class RegisterPage extends StatelessWidget {
           );
         },
         selectedBuilder: (context, dateTime, focusedDay) {
-          log('asdf ${dateTime} ${focusedDay}');
           return Stack(
             clipBehavior: Clip.none,
             children: [
@@ -359,7 +358,7 @@ class RegisterPage extends StatelessWidget {
             children: [
               Text(controller.regittime[i].toString()),
               if (controller.permittime[i]) ...[
-                Text(controller.test![controller.selectDate]![0]['typename']
+                Text(controller.test![controller.selectDate]![0]['typeName']
                     .toString()),
                 Text(controller.test![controller.selectDate]![0]['managerName']
                     .toString()),

@@ -3,10 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hair/common/api/api_call.dart';
 import 'package:hair/common/const/appPage.dart';
-import 'package:hair/common/util/shared_preference.dart';
+import 'package:hair/controller/app_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -18,10 +19,11 @@ class LoginController extends GetxController {
   ///오토로그인여부
   RxBool isAutologin = true.obs;
 
+  final box = GetStorage();
+
   @override
   Future<void> onReady() async {
     super.onReady();
-    await pref.init();
     autologin();
   }
 
@@ -62,8 +64,7 @@ class LoginController extends GetxController {
       calllogin('/login', temp).then((value) async {
         if (value) {
           //로그인 데이터 저장
-          await pref.writePref<String>("id", user.user!.email!);
-          await pref.writePref<String>("uid", user.user!.uid);
+          setlogindata(user.user!.email!, user.user!.uid);
           //홈화면으로 이동
           Get.offNamed(home);
         }
@@ -178,22 +179,33 @@ class LoginController extends GetxController {
     }
   }
 
+  ///로그인 데이터 저장
+  Future<void> setlogindata(String id, String uid) async {
+    log('[Login][setlogindata] 로그인 데이터 저장.');
+    bool isinit = await AppController.to.storage.initStorage;
+    if (isinit) {
+      AppController.to.storage.write("id", id);
+      AppController.to.storage.write("uid", uid);
+    }
+  }
+
   ///자동로그인
   Future<void> autologin() async {
-    //아이디랑 uid 정보가 있을때
-    if (pref.readPref<String>('id', '') != '' &&
-        pref.readPref<String>('uid', '') != '') {
-      Map<String, dynamic> body = {
-        "id": pref.readPref<String>('id', ''),
-        "uid": pref.readPref<String>('uid', '')
-      };
-      log('asdfasdf ${body}');
-      callloginfo('/logininfo', body).then((value) {
-        if (value) {
-          ///로그인정보 확인
-          Get.offNamed(home);
-        }
-      });
+    log('[Login][autologin] 자동 로그인 실행');
+    bool isinit = await AppController.to.storage.initStorage;
+    if (isinit) {
+      String id = AppController.to.storage.read("id");
+      String uid = AppController.to.storage.read("uid");
+      //아이디랑 uid 정보가 있을때
+      if (id != '' && uid != '') {
+        Map<String, dynamic> body = {"id": id, "uid": uid};
+        callloginfo('/logininfo', body).then((value) {
+          if (value) {
+            ///로그인정보 확인
+            Get.offNamed(home);
+          }
+        });
+      }
     }
   }
 }
