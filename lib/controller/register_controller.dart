@@ -3,15 +3,22 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:hair/common/api/api_call.dart';
 import 'package:hair/controller/app_controller.dart';
+import 'package:hair/model/events_model.dart';
 
 class RegisterController extends GetxController {
   static RegisterController get to => Get.find<RegisterController>();
 
   Rx<DateTime> onclick = DateTime.now().obs;
 
+  ///선택한 날짜
   final Rx<DateTime> _selectDate = DateTime.now().obs;
   DateTime get selectDate => _selectDate.value;
   set selectDate(DateTime value) => _selectDate.value = value;
+
+  ///화면에 그려지는 날짜 리스트
+  final RxList<String> _viewDate = <String>[].obs;
+  List<String> get viewDate => _viewDate.value;
+  set viewDate(List<String> value) => _viewDate.assignAll(value);
 
   ///예약가능 여부 시간 순
   final RxList<bool> _permittime = <bool>[
@@ -53,60 +60,25 @@ class RegisterController extends GetxController {
   ///등록 내용
   RxMap<String, dynamic> regitvalue = <String, dynamic>{}.obs;
 
-  RxMap events = <DateTime, List<Map<String, dynamic>>>{}.obs;
-  Map<DateTime, List<Map<String, dynamic>>>? test = {
-    DateTime.utc(2022, 11, 15): [
-      {
-        "time": "11:00:00",
-        "typename": "커트",
-        "typeCode": "01",
-        "phone": "01022049564",
-        "managerName": "아무개",
-        "managerCode": "01",
-        "confirm": "N"
-      },
-      {
-        "time": "12:00:00",
-        "typename": "커트",
-        "typeCode": "01",
-        "phone": "01022049564",
-        "managerName": "아무개",
-        "managerCode": "01",
-        "confirm": "N"
-      },
-      {
-        "time": "13:00:00",
-        "typename": "펌",
-        "typeCode": "02",
-        "phone": "01022049564",
-        "managerName": "아무개",
-        "managerCode": "01",
-        "confirm": "N"
-      },
-      {
-        "time": "14:00:00",
-        "typename": "펌",
-        "typeCode": "02",
-        "phone": "01022049564",
-        "managerName": "아무개",
-        "managerCode": "01",
-        "confirm": "N"
-      },
-    ],
-  };
+  ///예약 목록
+  RxMap<DateTime, List<Map<String, dynamic>>> events =
+      <DateTime, List<Map<String, dynamic>>>{}.obs;
 
   @override
   void onReady() {
     // TODO: implement onReady
     super.onReady();
+    readregitlist();
+    // readregister('/getRegister', {'date': _viewDate.value});
+    // log(_viewDate.value.toString());
   }
 
   ///등록데이터 갱신
   void permitregister(DateTime date) {
     List<bool> temp = [];
-    if (test![date] != null) {
+    if (events[date] != null) {
       for (int i = 0; i < regittime.length; i++) {
-        test![date]?.indexWhere((e) => e['time'] == regittime[i]) == -1
+        events[date]?.indexWhere((e) => e['time'] == regittime[i]) == -1
             ? temp.add(false)
             : temp.add(true);
       }
@@ -140,6 +112,8 @@ class RegisterController extends GetxController {
     regitvalue['id'] = AppController.to.user.id;
     regitvalue['name'] = AppController.to.user.name;
     regitvalue['phone'] = AppController.to.user.phone ?? "";
+    regitvalue['date'] =
+        '${selectDate.year}${selectDate.month}${selectDate.day}';
 
     ///예약 승인
     regitvalue['confirm'] = 'N';
@@ -160,5 +134,13 @@ class RegisterController extends GetxController {
         Get.snackbar('실패', '예약실패');
       }
     });
+  }
+
+  Future<void> readregitlist() async {
+    log('[등록api][readregitlist] 등록밸류 value ${_viewDate}');
+    events
+        .addAll(await readregister('/getRegister', {'date': _viewDate.value}));
+    // log('asdf ${events.value}');
+    _viewDate.clear();
   }
 }
