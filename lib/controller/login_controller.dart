@@ -193,7 +193,7 @@ class LoginController extends GetxController {
   Future<void> autologin() async {
     log('[Login][autologin] 자동 로그인 실행');
     bool isinit = await AppController.to.storage.initStorage;
-    if (isinit) {
+    try {
       String id = AppController.to.storage.read("id");
       String uid = AppController.to.storage.read("uid");
       //아이디랑 uid 정보가 있을때
@@ -206,6 +206,8 @@ class LoginController extends GetxController {
           }
         });
       }
+    } catch (e) {
+      log('', error: '[Login][autologin] 자동 로그인 실패 error : ${e.toString()}');
     }
   }
 }

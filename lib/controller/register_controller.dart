@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:hair/common/api/api_call.dart';
+import 'package:hair/common/util/function.dart';
 import 'package:hair/controller/app_controller.dart';
 import 'package:hair/model/events_model.dart';
+import 'package:intl/intl.dart';
 
 class RegisterController extends GetxController {
   static RegisterController get to => Get.find<RegisterController>();
@@ -14,11 +16,6 @@ class RegisterController extends GetxController {
   final Rx<DateTime> _selectDate = DateTime.now().obs;
   DateTime get selectDate => _selectDate.value;
   set selectDate(DateTime value) => _selectDate.value = value;
-
-  ///화면에 그려지는 날짜 리스트
-  final RxList<String> _viewDate = <String>[].obs;
-  List<String> get viewDate => _viewDate.value;
-  set viewDate(List<String> value) => _viewDate.assignAll(value);
 
   ///예약가능 여부 시간 순
   final RxList<bool> _permittime = <bool>[
@@ -61,24 +58,28 @@ class RegisterController extends GetxController {
   RxMap<String, dynamic> regitvalue = <String, dynamic>{}.obs;
 
   ///예약 목록
-  RxMap<DateTime, List<Map<String, dynamic>>> events =
+  RxMap<DateTime, List<Map<String, dynamic>>> eventitems =
       <DateTime, List<Map<String, dynamic>>>{}.obs;
 
   @override
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    readregitlist();
-    // readregister('/getRegister', {'date': _viewDate.value});
-    // log(_viewDate.value.toString());
+  }
+
+  @override
+  Future<void> onInit() async {
+    // TODO: implement onInit
+    super.onInit();
+    await readregitlist();
   }
 
   ///등록데이터 갱신
   void permitregister(DateTime date) {
     List<bool> temp = [];
-    if (events[date] != null) {
+    if (eventitems[date] != null) {
       for (int i = 0; i < regittime.length; i++) {
-        events[date]?.indexWhere((e) => e['time'] == regittime[i]) == -1
+        eventitems[date]?.indexWhere((e) => e['time'] == regittime[i]) == -1
             ? temp.add(false)
             : temp.add(true);
       }
@@ -112,8 +113,7 @@ class RegisterController extends GetxController {
     regitvalue['id'] = AppController.to.user.id;
     regitvalue['name'] = AppController.to.user.name;
     regitvalue['phone'] = AppController.to.user.phone ?? "";
-    regitvalue['date'] =
-        '${selectDate.year}${selectDate.month}${selectDate.day}';
+    regitvalue['date'] = dateTostr(selectDate);
 
     ///예약 승인
     regitvalue['confirm'] = 'N';
@@ -124,12 +124,17 @@ class RegisterController extends GetxController {
     } else if (regitvalue['time'] == null) {
       Get.snackbar('주의', '시간을 선택해주세요');
     }
-    log('[등록api][setregiter] 등록밸류 value ${regitvalue}');
-    callregister('/register', regitvalue).then((value) {
+    log('[등록api][setregiter] 등록내용 value ${regitvalue}');
+    callregister('/register', regitvalue).then((value) async {
       if (value) {
-        ///로그인정보 확인
-        // Get.offNamed(home);
         Get.snackbar('성공', '예약성공');
+
+        //예약목록 갱신
+        await readregitlist();
+        //화면 갱신
+        onclick(selectDate);
+        //선택화면 갱신
+        regitvalue.clear();
       } else {
         Get.snackbar('실패', '예약실패');
       }
@@ -137,10 +142,12 @@ class RegisterController extends GetxController {
   }
 
   Future<void> readregitlist() async {
-    log('[등록api][readregitlist] 등록밸류 value ${_viewDate}');
-    events
-        .addAll(await readregister('/getRegister', {'date': _viewDate.value}));
-    // log('asdf ${events.value}');
-    _viewDate.clear();
+    log('asdf [등록api][readregitlist] 등록밸류 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
+    String today =
+        '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
+    Map<DateTime, List<Map<String, dynamic>>> event =
+        await readregister('/getRegister', {'date': today});
+
+    eventitems.addAll(event);
   }
 }

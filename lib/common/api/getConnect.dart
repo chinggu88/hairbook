@@ -48,7 +48,8 @@ class Getconnect {
       if (response.statusCode == 200) {
         log('[RESTAPI][postApi] statusCode = ${response.statusCode} body = ${response.body}');
         if (response.body['code'] != 'C0000') {
-          GetSnackBar(title: 'test', message: erm.error_message['status_code']);
+          GetSnackBar(
+              title: 'test', message: erm.error_message[response.body['code']]);
         }
         returnmodel = response.body;
       } else {

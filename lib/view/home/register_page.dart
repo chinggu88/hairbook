@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair/controller/register_controller.dart';
-import 'package:hair/model/events_model.dart';
 import 'package:hair/view/common/scafford_page.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -41,20 +40,22 @@ class RegisterPage extends StatelessWidget {
               //   height: 50,
               // ),
               Text('시간대 설정'),
+              // calendar(),
               Obx(
                 () {
-                  log('${controller.onclick.value}');
+                  log('[REGISTERPAGE] ${controller.eventitems.length}');
+                  log('[REGISTERPAGE] ${controller.onclick}');
                   return calendar();
                 },
               ),
               Obx(() {
-                log('${controller.events}');
+                log('[REGISTERPAGE] ${controller.eventitems.length}');
                 return Container(
                   height: 230,
                   child: GridView.count(
                     childAspectRatio: 1.6,
                     crossAxisCount: 3,
-                    children: Schecdulelist(controller.events),
+                    children: Schecdulelist(controller.eventitems),
                   ),
                 );
               }),
@@ -208,8 +209,7 @@ class RegisterPage extends StatelessWidget {
       //캘린더 높이
       daysOfWeekHeight: 30,
       focusedDay: controller.onclick.value,
-      firstDay: DateTime(
-          DateTime.now().year, DateTime.now().month - 3, DateTime.now().day),
+      firstDay: DateTime.now(),
       lastDay: DateTime(
         DateTime.now().year,
         DateTime.now().month + 3,
@@ -231,9 +231,10 @@ class RegisterPage extends StatelessWidget {
       availableCalendarFormats: const {CalendarFormat.week: 'Week'},
       //캘린더 스케줄
       eventLoader: (day) {
-        final dateStr = DateFormat('yyyyMMdd').format(day);
-        controller.viewDate.add(dateStr);
-        return controller.events[day] ?? [];
+        return controller.eventitems[day] ?? [];
+      },
+      onPageChanged: (focusedDay) async {
+        // await controller.readregitlist();
       },
       calendarStyle: const CalendarStyle(
         markersMaxCount: 0,
@@ -261,13 +262,13 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               )),
-              controller.events[dateTime] != null
+              controller.eventitems[dateTime] != null
                   ? Container(
                       height: 15,
                       width: 15,
                       color: Colors.blueAccent,
                       child: Text(
-                        '${controller.events[dateTime]?.length.toString()}',
+                        '${controller.eventitems[dateTime]?.length.toString()}',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
@@ -285,13 +286,13 @@ class RegisterPage extends StatelessWidget {
                 dateTime.day.toString(),
                 style: TextStyle(fontSize: 20),
               )),
-              controller.events[dateTime] != null
+              controller.eventitems[dateTime] != null
                   ? Container(
                       height: 15,
                       width: 15,
                       color: Colors.blueAccent,
                       child: Text(
-                        '${controller.events[dateTime]?.length.toString()}',
+                        '${controller.eventitems[dateTime]?.length.toString()}',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
@@ -316,13 +317,13 @@ class RegisterPage extends StatelessWidget {
                   )),
                 ),
               ),
-              controller.events[dateTime] != null
+              controller.eventitems[dateTime] != null
                   ? Container(
                       height: 15,
                       width: 15,
                       color: Colors.blueAccent,
                       child: Text(
-                        '${controller.events[dateTime]?.length.toString()}',
+                        '${controller.eventitems[dateTime]?.length.toString()}',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
@@ -332,16 +333,11 @@ class RegisterPage extends StatelessWidget {
           );
         },
       ),
-      onPageChanged: (focusedDay) {
-        // final dateStr = DateFormat('yyyyMMdd').format(focusedDay);
-        controller.readregitlist();
-      },
     );
   }
 
   ///등록 상세내역
   List<Widget> Schecdulelist(Map<DateTime, List<Map<String, dynamic>>> event) {
-    log('Schecdulelist ${event}');
     List<Widget> reWidget = [];
     for (int i = 0; i < controller.regittime.length; i++) {
       reWidget.add(GestureDetector(
@@ -367,11 +363,13 @@ class RegisterPage extends StatelessWidget {
             children: [
               Text(controller.regittime[i].toString()),
               if (controller.permittime[i]) ...[
-                Text(controller.events[controller.selectDate]![0]['typeName']
+                Text(controller.eventitems[controller.selectDate]![0]
+                        ['typeName']
                     .toString()),
-                Text(controller.events[controller.selectDate]![0]['managerName']
+                Text(controller.eventitems[controller.selectDate]![0]
+                        ['managerName']
                     .toString()),
-                Text(controller.events[controller.selectDate]![0]['confirm']
+                Text(controller.eventitems[controller.selectDate]![0]['confirm']
                     .toString()),
               ]
             ],
