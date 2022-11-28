@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:hair/common/api/api_call.dart';
 import 'package:hair/common/util/function.dart';
 import 'package:hair/controller/app_controller.dart';
-import 'package:hair/model/events_model.dart';
-import 'package:intl/intl.dart';
 
 class RegisterController extends GetxController {
   static RegisterController get to => Get.find<RegisterController>();
@@ -62,16 +60,12 @@ class RegisterController extends GetxController {
       <DateTime, List<Map<String, dynamic>>>{}.obs;
 
   @override
-  void onReady() {
+  Future<void> onReady() async {
     // TODO: implement onReady
     super.onReady();
-  }
-
-  @override
-  Future<void> onInit() async {
-    // TODO: implement onInit
-    super.onInit();
     await readregitlist();
+    onclick(selectDate);
+    permitregister(selectDate);
   }
 
   ///등록데이터 갱신
@@ -141,13 +135,14 @@ class RegisterController extends GetxController {
     });
   }
 
+  ///예약건수 조회
   Future<void> readregitlist() async {
-    log('asdf [등록api][readregitlist] 등록밸류 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
+    log('[등록api][readregitlist] 등록 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
     String today =
         '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
     Map<DateTime, List<Map<String, dynamic>>> event =
         await readregister('/getRegister', {'date': today});
-
+    log('[등록api][readregitlist] 등록성공');
     eventitems.addAll(event);
   }
 }
