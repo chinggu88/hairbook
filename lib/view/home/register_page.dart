@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair/controller/register_controller.dart';
 import 'package:hair/view/common/scafford_page.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class RegisterPage extends StatelessWidget {

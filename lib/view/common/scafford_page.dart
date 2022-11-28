@@ -29,7 +29,7 @@ class Scaffoldhair extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: showappbar ? appbartitle(appbar) : null,
-      body: widgetbody,
+      body: Container(width: Get.size.width, child: widgetbody),
       bottomNavigationBar: showbottomnavigation
           ? BottomNavigationBar(currentIndex: AppController.to.index, items: [
               BottomNavigationBarItem(

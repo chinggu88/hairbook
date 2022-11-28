@@ -81,3 +81,47 @@ Future<Map<DateTime, List<Map<String, dynamic>>>> readregister(
     return {};
   }
 }
+
+///예약목록
+Future<List<Map<String, dynamic>>> readregisterByid(
+    String url, Map<String, dynamic> body) async {
+  List<Map<String, dynamic>> result = [];
+  List<dynamic> temp = [];
+  try {
+    Map<String, dynamic> res = await Getconnect.postApi(url, body);
+    if (res.isNotEmpty) {
+      temp = res['data'];
+      temp.forEach((e) {
+        result.add(e);
+      });
+      return result;
+    } else {
+      return result;
+    }
+  } catch (e) {
+    log('', error: '[api_call][readregister] error value ${e.toString()}');
+    return [];
+  }
+}
+
+///예약목록
+Future<List<Map<String, dynamic>>> readhistory(
+    String url, Map<String, dynamic> body) async {
+  List<Map<String, dynamic>> result = [];
+  List<dynamic> temp = [];
+  try {
+    Map<String, dynamic> res = await Getconnect.postApi(url, body);
+    if (res.isNotEmpty) {
+      temp = res['data'];
+      temp.forEach((e) {
+        result.add(e);
+      });
+      return result;
+    } else {
+      return result;
+    }
+  } catch (e) {
+    log('', error: '[api_call][readregister] error value ${e.toString()}');
+    return [];
+  }
+}
