@@ -11,7 +11,8 @@ Future<bool> calllogin(String url, Map<String, dynamic> body) async {
   try {
     Map<String, dynamic> res = await Getconnect.postApi(url, body);
     if (res.isNotEmpty) {
-      AppController.to.user = User.fromJson(res['data]']);
+      AppController.to.user =
+          User.fromJson(res['data'] as Map<String, dynamic>);
       return true;
     } else {
       return false;

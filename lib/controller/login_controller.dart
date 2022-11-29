@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get/get.dart';
@@ -38,6 +39,7 @@ class LoginController extends GetxController {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
+      final token = await FirebaseMessaging.instance.getToken();
       final user = await FirebaseAuth.instance.signInWithCredential(credential);
       log('[Login][signInWithGoogle] 구글 로그인 성공..');
       log('[Login][signInWithGoogle] ---------------------------------------------------------------------------------------------');
@@ -46,12 +48,12 @@ class LoginController extends GetxController {
       log('[Login][signInWithGoogle] phoneNumber : ${user.user!.phoneNumber}');
       log('[Login][signInWithGoogle] photoURL : ${user.user!.photoURL}');
       log('[Login][signInWithGoogle] uid : ${user.user!.uid}');
-      log('[Login][signInWithGoogle] photoURL : ${user.user!.toString()}');
+      log('[Login][signInWithGoogle] fcmkey : ${token}');
       log('[Login][signInWithGoogle] ---------------------------------------------------------------------------------------------');
       Map<String, dynamic> temp = {
         "id": user.user!.email,
         "name": user.user!.displayName,
-        "fcmkey": "",
+        "fcmkey": token,
         "phone": "",
         "type": "0",
         "photoURL": user.user!.photoURL,
@@ -187,6 +189,9 @@ class LoginController extends GetxController {
       AppController.to.storage.write("id", id);
       AppController.to.storage.write("uid", uid);
     }
+    log('[Login][setlogindata] 로그인 데이터 저장성공.');
+    log('[Login][setlogindata] 로그인 데이터 ID ${AppController.to.storage.read("id")}');
+    log('[Login][setlogindata] 로그인 데이터 UID ${AppController.to.storage.read("uid")}');
   }
 
   ///자동로그인

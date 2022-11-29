@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hair/controller/app_controller.dart';
 import 'package:hair/controller/profile_controller.dart';
 import 'package:hair/view/common/scafford_page.dart';
 
@@ -53,7 +54,7 @@ class Profile_page extends GetView<ProfileController> {
         child: CircleAvatar(
           child: ClipOval(
             child: Image.network(
-              'https://cdn.imweb.me/thumbnail/20221024/1c7b541efd331.jpg',
+              '${AppController.to.user.photoURL}',
             ),
           ),
           radius: 100,
@@ -131,7 +132,6 @@ class Profile_page extends GetView<ProfileController> {
         ],
       ));
     });
-    log('asdf ${result.length}');
     return result;
   }
 }

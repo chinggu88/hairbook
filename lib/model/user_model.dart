@@ -23,6 +23,8 @@ class User {
   ///최초 로그인 날짜
   String? insertdate;
 
+  ///최초 로그인 날짜
+  String? photoURL;
   User(
       {this.name,
       this.fcmkey,
@@ -31,7 +33,8 @@ class User {
       this.id,
       this.uid,
       this.phone,
-      this.insertdate});
+      this.insertdate,
+      this.photoURL});
 
   User.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -42,6 +45,7 @@ class User {
     uid = json['uid'];
     phone = json['phone'];
     insertdate = json['insertdate'];
+    photoURL = json['photoURL'];
   }
 
   Map<String, dynamic> toJson() {
@@ -54,6 +58,7 @@ class User {
     data['uid'] = this.uid;
     data['phone'] = this.phone;
     data['insertdate'] = this.insertdate;
+    data['photoURL'] = this.photoURL;
     return data;
   }
 }
