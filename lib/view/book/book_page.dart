@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:hair/common/const/appPage.dart';
 import 'package:hair/view/common/scafford_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -12,9 +10,6 @@ class BookPage extends StatelessWidget {
     return Scaffoldhair(
       widgetbody: Column(
         children: [
-          SizedBox(
-            height: 50,
-          ),
           Center(
             child: TableCalendar(
               focusedDay: DateTime.now(),

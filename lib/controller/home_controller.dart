@@ -1,32 +1,32 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:hair/common/api/api_call.dart';
 import 'package:hair/common/api/firebase_func.dart';
+import 'package:hair/common/util/function.dart';
+import 'package:hair/controller/app_controller.dart';
 
 class homeController extends GetxController {
   static homeController get to => Get.find<homeController>();
-  RxBool _anistart = true.obs;
-  bool get anistart => _anistart.value;
-  set anistart(bool value) => _anistart.value = value;
 
-  Timer? _timer;
+  ///예약 목록
+  RxList<Map<String, dynamic>> eventlist = <Map<String, dynamic>>[].obs;
   @override
   Future<void> onReady() async {
     // TODO: implement onReady
     super.onReady();
-    setanimation();
+    readregitlistByid();
   }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-    _timer!.cancel();
-  }
+  ///예약건수 조회
+  Future<void> readregitlistByid() async {
+    log('[등록api][readregitlistByid] 등록 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
 
-  void setanimation() {
-    _timer = Timer.periodic(const Duration(seconds: 2), (_) {
-      _anistart(!_anistart.value);
-    });
+    List<Map<String, dynamic>> event = await readregisterByid(
+        '/getRegisterByid',
+        {'id': AppController.to.user.id, 'date': dateTostr(DateTime.now())});
+    log('[등록api][readregitlistByid] 등록성공 ${event}');
+    eventlist.addAll(event);
   }
 }
