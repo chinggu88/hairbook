@@ -1,13 +1,8 @@
-import 'dart:developer';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hair/common/bindings/initbinds.dart';
 import 'package:hair/common/const/appPage.dart';
-import 'package:hair/common/util/easyloding.dart';
 import 'package:hair/controller/home_controller.dart';
 import 'package:hair/controller/login_controller.dart';
 import 'package:hair/controller/profile_controller.dart';
@@ -26,7 +21,7 @@ void main() {
       onInit: () async {
         Intl.defaultLocale = 'ko_KR';
       },
-      initialRoute: login,
+      initialRoute: home,
       initialBinding: initbinding(),
       getPages: [
         GetPage(

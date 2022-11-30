@@ -68,7 +68,7 @@ class RegisterPage extends StatelessWidget {
           ),
         ),
       ),
-      showbottomnavigation: false,
+      shownavigation: false,
     );
   }
 

@@ -15,46 +15,15 @@ class Home_page extends GetView<homeController> {
     return Scaffoldhair(
       showappbar: false,
       widgetbody: GestureDetector(
-          onTap: () {
-            controller.anistart = !controller.anistart;
-          },
-          onHorizontalDragEnd: (details) {
-            if (details.primaryVelocity! < 0.0) {
-              Get.toNamed(register);
-            }
-          },
-          child: Stack(children: [
-            Center(
-                child: Image.asset(
-              'images/main/testmain.jpg',
-              width: Get.size.width,
-              height: Get.size.height,
-              fit: BoxFit.fill,
-            )),
-            Center(
-              child: Column(
-                children: [
-                  Text('${AppController.to.user.id}'),
-                  Text('${AppController.to.user.uid}'),
-                  Text('${AppController.to.user.fcmkey}'),
-                  Text('${AppController.to.user.name}'),
-                ],
-              ),
-            )
-            // Obx(
-            //   () => AnimatedPositioned(
-            //     child: Container(
-            //       width: 50,
-            //       height: 50,
-            //       color: Colors.blueAccent,
-            //     ),
-            //     right: controller.anistart ? 300 : 50,
-            //     top: controller.anistart ? 300 : 50,
-            //     curve: Curves.fastOutSlowIn,
-            //     duration: const Duration(seconds: 2),
-            //   ),
-            // ),
-          ])),
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity! < 0.0) {
+            Get.toNamed(register);
+          }
+        },
+        child: SingleChildScrollView(
+          child: Text('SingleChildScrollView'),
+        ),
+      ),
     );
   }
 }
