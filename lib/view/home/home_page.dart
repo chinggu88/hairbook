@@ -24,25 +24,6 @@ class Home_page extends GetView<homeController> {
             child: Column(
               children: [
                 profile(),
-                // Container(
-                //   width: Get.width,
-                //   child: Text(
-                //     '안녕하세요',
-                //     style: TextStyle(
-                //       fontSize: 20,
-                //       fontFamily: 'BMHANNAAir',
-                //       fontWeight: FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
-                // Text(
-                //   '이강훈님',
-                //   style: TextStyle(
-                //     fontSize: 20,
-                //     fontFamily: 'BMHANNAAir',
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
                 SizedBox(
                   height: 20,
                 ),

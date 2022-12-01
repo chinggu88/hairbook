@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:hair/common/api/getConnect.dart';
 import 'package:hair/controller/app_controller.dart';
+import 'package:hair/model/book_model.dart';
 import 'package:hair/model/events_model.dart';
 import 'package:hair/model/user_model.dart';
 import 'package:intl/intl.dart';
@@ -100,7 +101,7 @@ Future<List<Map<String, dynamic>>> readregisterByid(
       return result;
     }
   } catch (e) {
-    log('', error: '[api_call][readregister] error value ${e.toString()}');
+    log('', error: '[api_call][readregisterByid] error value ${e.toString()}');
     return [];
   }
 }
@@ -123,6 +124,30 @@ Future<List<Map<String, dynamic>>> readhistory(
     }
   } catch (e) {
     log('', error: '[api_call][readregister] error value ${e.toString()}');
+    return [];
+  }
+}
+
+///예약목록
+Future<List<book>> getBookListbyDate(
+    String url, Map<String, dynamic> body) async {
+  List<book> result = [];
+  List<dynamic> temp = [];
+  try {
+    Map<String, dynamic> res = await Getconnect.postApi(url, body);
+    if (res.isNotEmpty) {
+      log('asdf ${res['data']}');
+      temp = res['data'];
+      temp.forEach((e) {
+        result.add(book.fromJson(e));
+        log('${e.toString()}');
+      });
+      return result;
+    } else {
+      return result;
+    }
+  } catch (e) {
+    log('', error: '[api_call][getBookListbyDate] error value ${e.toString()}');
     return [];
   }
 }
