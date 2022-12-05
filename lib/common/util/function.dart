@@ -9,3 +9,19 @@ String dateTostr(DateTime time) {
       : '0' + time.day.toString();
   return '${year}${month}${day}';
 }
+
+///String > YYYY-MM-DD
+String strToDate(String time) {
+  String year = time.substring(0, 4);
+  String month = time.substring(4, 6);
+  String day = time.substring(6, 8);
+  return '${year}-${month}-${day}';
+}
+
+///String to datetime
+DateTime strToDateTime(String time) {
+  String year = time.substring(0, 4);
+  String month = time.substring(4, 6);
+  String day = time.substring(6, 8);
+  return DateTime.parse('$year-$month-$day 00:00:00.000Z');
+}

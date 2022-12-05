@@ -32,9 +32,6 @@ class Scaffoldhair extends StatelessWidget {
       appBar: showappbar ? appbartitle(appbar) : appbartitle(99),
       body: Column(
         children: [
-          SizedBox(
-            height: 20,
-          ),
           pagenavigation(shownavigation),
           widgetbody,
         ],
@@ -87,6 +84,9 @@ class Scaffoldhair extends StatelessWidget {
     return shownavigation
         ? Column(
             children: [
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 margin: const EdgeInsets.only(left: 10),
                 child: Row(

@@ -15,13 +15,27 @@ class BookPage extends GetView<BookController> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Obx((() {
-              // log('[REGISTERPAGE] ${controller.eventitems.length}');
-              // log('[BOOKRPAGE] ${controller.onclick}');
+            Obx(() {
+              log('[REGISTERPAGE] ${controller.eventitems.length}');
+              log('[BOOKRPAGE] ${controller.onclick}');
               return calendar();
-            })),
+            }),
             const SizedBox(height: 8.0),
-            schedule()
+            Obx(() {
+              log('[REGISTERPAGE] ${controller.eventitems.length}');
+              log('[BOOKRPAGE] ${controller.selectDate}');
+              return SizedBox(
+                height: 150,
+                child: GridView.count(
+                  childAspectRatio: 1.6,
+                  crossAxisCount: 3,
+                  children:
+                      controller.eventitems[controller.selectDate.value] != null
+                          ? Schecdulelist(controller.eventitems)
+                          : [],
+                ),
+              );
+            }),
           ],
         ),
       ),
@@ -40,35 +54,174 @@ class BookPage extends GetView<BookController> {
       },
       focusedDay: controller.onclick.value,
       onDaySelected: (selectedDay, focusedDay) {
-        controller.readregitlist();
         controller.onclick.value = selectedDay;
       },
       selectedDayPredicate: (day) {
         return controller.onclick.value == day;
       },
+      eventLoader: (day) {
+        return controller.eventitems[day] ?? [];
+      },
+      calendarStyle: const CalendarStyle(
+        markersMaxCount: 0,
+        todayDecoration:
+            BoxDecoration(color: Color(0xFF5C6BC0), shape: BoxShape.rectangle),
+        selectedDecoration:
+            BoxDecoration(color: Color(0xFF5C6BC0), shape: BoxShape.rectangle),
+      ),
+      calendarBuilders: CalendarBuilders(
+        todayBuilder: (context, dateTime, focusedDay) {
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Center(
+                  child: Container(
+                width: 50,
+                height: 40,
+                color: Colors.amberAccent,
+                child: Center(
+                  child: Text(
+                    dateTime.day.toString(),
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              )),
+              controller.eventitems[dateTime] != null
+                  ? Container(
+                      height: 15,
+                      width: 15,
+                      color: Colors.blueAccent,
+                      child: Text(
+                        '${controller.eventitems[dateTime]?.length.toString()}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  : Container(
+                      height: 15,
+                      width: 15,
+                      color: Colors.blueAccent,
+                      child: Text(
+                        '0',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+            ],
+          );
+        },
+        defaultBuilder: (context, dateTime, _) {
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Center(
+                  child: Text(
+                dateTime.day.toString(),
+                style: TextStyle(fontSize: 20),
+              )),
+              controller.eventitems[dateTime] != null
+                  ? Container(
+                      height: 15,
+                      width: 15,
+                      color: Colors.blueAccent,
+                      child: Text(
+                        '${controller.eventitems[dateTime]?.length.toString()}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  : Container(
+                      height: 15,
+                      width: 15,
+                      color: Colors.blueAccent,
+                      child: Text(
+                        '0',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+            ],
+          );
+        },
+        selectedBuilder: (context, dateTime, focusedDay) {
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Center(
+                child: Container(
+                  width: 50,
+                  height: 40,
+                  color: Colors.amberAccent,
+                  child: Center(
+                      child: Text(
+                    dateTime.day.toString(),
+                    style: TextStyle(fontSize: 20),
+                  )),
+                ),
+              ),
+              controller.eventitems[dateTime] != null
+                  ? Container(
+                      height: 15,
+                      width: 15,
+                      color: Colors.blueAccent,
+                      child: Text(
+                        '${controller.eventitems[dateTime]?.length.toString()}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  : Container(
+                      height: 15,
+                      width: 15,
+                      color: Colors.blueAccent,
+                      child: Text(
+                        '0',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+            ],
+          );
+        },
+      ),
     );
   }
 
-  Widget schedule() {
-    log('asdf ${controller.calendarFormat}');
-    return Flexible(
-      fit: FlexFit.loose,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: 100,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Container(
-                height: 20,
-                color: Colors.red,
-                child: Text('asdf'),
-              ),
-            );
-          },
+  ///등록 상세내역
+  List<Widget> Schecdulelist(Map<DateTime, List<Map<String, dynamic>>> event) {
+    log('asdf selectDate ${controller.selectDate} :: ${controller.regittime.length} :: ${controller.eventitems[controller.selectDate]![0]['typeName'].toString()}');
+    List<Widget> reWidget = [];
+    controller.eventitems[DateTime.now()] == null ? Container() : Container();
+    for (int i = 0; i < controller.regittime.length; i++) {
+      reWidget.add(GestureDetector(
+        onTap: () {},
+        child: Container(
+          decoration: BoxDecoration(
+            color: controller.permittime[i] ? Colors.grey : Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.white, width: 5),
+          ),
+          child: Column(
+            children: [
+              Text(controller.regittime[i].toString()),
+              if (controller.permittime[i]) ...[
+                Text(controller.eventitems[controller.selectDate]![0]
+                        ['typeName']
+                    .toString()),
+                Text(controller.eventitems[controller.selectDate]![0]
+                        ['managerName']
+                    .toString()),
+                Text(controller.eventitems[controller.selectDate]![0]['confirm']
+                    .toString()),
+              ]
+            ],
+          ),
         ),
-      ),
-    );
+      ));
+    }
+
+    return reWidget;
   }
 }

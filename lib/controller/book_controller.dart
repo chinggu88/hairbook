@@ -15,14 +15,45 @@ class BookController extends GetxController {
   set calendarFormat(CalendarFormat value) => _calendarFormat.value = value;
 
   ///선택한 날짜
-  final Rx<DateTime> _selectDate = DateTime.now().obs;
-  DateTime get selectDate => _selectDate.value;
-  set selectDate(DateTime value) => _selectDate.value = value;
+  final Rx<DateTime> selectDate = DateTime.now().obs;
 
   Rx<DateTime> onclick = DateTime.now().obs;
 
-  RxList<book> bookList = <book>[].obs;
+  ///달력이벤트 목록
+  RxMap<DateTime, List<Map<String, dynamic>>> eventitems =
+      <DateTime, List<Map<String, dynamic>>>{}.obs;
 
+  ///예약가능 여부 시간 순
+  final RxList<bool> permittime = <bool>[
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ].obs;
+
+  ///등록가능한 올타임
+  final RxList<String> regittime = <String>[
+    "09:00:00",
+    "10:00:00",
+    "11:00:00",
+    "12:00:00",
+    "13:00:00",
+    "14:00:00",
+    "15:00:00",
+    "16:00:00",
+    "17:00:00",
+    "18:00:00",
+    "19:00:00",
+    "20:00:00",
+  ].obs;
   @override
   Future<void> onReady() async {
     // TODO: implement onReady
@@ -33,8 +64,11 @@ class BookController extends GetxController {
   ///예약건수 조회
   Future<void> readregitlist() async {
     log('[등록api][readregitlist] 등록 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
-    await getBookListbyDate(
-        '/getBookListbyDate', {'date': dateTostr(DateTime.now())});
+    String today =
+        '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
+    Map<DateTime, List<Map<String, dynamic>>> event =
+        await readregister('/getRegister', {'date': today});
     log('[등록api][readregitlist] 등록성공');
+    eventitems.addAll(event);
   }
 }

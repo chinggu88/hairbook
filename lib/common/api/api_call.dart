@@ -63,6 +63,7 @@ Future<Map<DateTime, List<Map<String, dynamic>>>> readregister(
   try {
     Map<String, dynamic> res = await Getconnect.postApi(url, body);
     if (res.isNotEmpty) {
+      log('asdf ${res['data']}');
       temp = res['data'];
       temp.forEach((key, value) {
         List<Map<String, dynamic>> v = [];
@@ -136,7 +137,6 @@ Future<List<book>> getBookListbyDate(
   try {
     Map<String, dynamic> res = await Getconnect.postApi(url, body);
     if (res.isNotEmpty) {
-      log('asdf ${res['data']}');
       temp = res['data'];
       temp.forEach((e) {
         result.add(book.fromJson(e));

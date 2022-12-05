@@ -1,5 +1,5 @@
 class book {
-  String? seq;
+  int? seq;
   String? confirm;
   String? managerCode;
   String? typeName;

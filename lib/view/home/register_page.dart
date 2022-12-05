@@ -51,7 +51,7 @@ class RegisterPage extends StatelessWidget {
                 log('[REGISTERPAGE] ${controller.eventitems.length}');
                 log('[REGISTERPAGE] ${controller.permittime}');
                 return SizedBox(
-                  height: 230,
+                  height: 150,
                   child: GridView.count(
                     childAspectRatio: 1.6,
                     crossAxisCount: 3,
@@ -342,7 +342,6 @@ class RegisterPage extends StatelessWidget {
   ///등록 상세내역
   List<Widget> Schecdulelist(Map<DateTime, List<Map<String, dynamic>>> event) {
     List<Widget> reWidget = [];
-    print(controller.eventitems[DateTime.now()]);
     controller.eventitems[DateTime.now()] == null ? Container() : Container();
     for (int i = 0; i < controller.regittime.length; i++) {
       reWidget.add(GestureDetector(
