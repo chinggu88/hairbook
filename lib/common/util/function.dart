@@ -25,3 +25,9 @@ DateTime strToDateTime(String time) {
   String day = time.substring(6, 8);
   return DateTime.parse('$year-$month-$day 00:00:00.000Z');
 }
+
+int diffDate(String date) {
+  DateTime today = DateTime.now();
+  DateTime start = DateTime.parse(date);
+  return today.difference(start).inDays;
+}

@@ -195,7 +195,6 @@ class BookPage extends GetView<BookController> {
   List<Widget> Schecdulelist(Map<DateTime, List<Map<String, dynamic>>> event) {
     List<Widget> reWidget = [];
     for (int i = 0; i < controller.regittime.length; i++) {
-      print('asdf ${controller.selectDate}');
       reWidget.add(GestureDetector(
         onTap: () {},
         child: Container(

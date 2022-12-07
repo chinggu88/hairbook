@@ -63,7 +63,6 @@ Future<Map<DateTime, List<Map<String, dynamic>>>> readregister(
   try {
     Map<String, dynamic> res = await Getconnect.postApi(url, body);
     if (res.isNotEmpty) {
-      log('asdf ${res['data']}');
       temp = res['data'];
       temp.forEach((key, value) {
         List<Map<String, dynamic>> v = [];
@@ -86,16 +85,16 @@ Future<Map<DateTime, List<Map<String, dynamic>>>> readregister(
 }
 
 ///예약목록
-Future<List<Map<String, dynamic>>> readregisterByid(
+Future<List<book>> readregisterByid(
     String url, Map<String, dynamic> body) async {
-  List<Map<String, dynamic>> result = [];
+  List<book> result = [];
   List<dynamic> temp = [];
   try {
     Map<String, dynamic> res = await Getconnect.postApi(url, body);
     if (res.isNotEmpty) {
       temp = res['data'];
       temp.forEach((e) {
-        result.add(e);
+        result.add(book.fromJson(e));
       });
       return result;
     } else {
@@ -103,6 +102,30 @@ Future<List<Map<String, dynamic>>> readregisterByid(
     }
   } catch (e) {
     log('', error: '[api_call][readregisterByid] error value ${e.toString()}');
+    return [];
+  }
+}
+
+///예약카테고리목록
+Future<List<book>> readregisterByCategory(
+    String url, Map<String, dynamic> body) async {
+  List<book> result = [];
+  List<dynamic> temp = [];
+  try {
+    Map<String, dynamic> res = await Getconnect.postApi(url, body);
+    if (res.isNotEmpty) {
+      temp = res['data'];
+      temp.forEach((e) {
+        result.add(book.fromJson(e));
+      });
+      return result;
+    } else {
+      return result;
+    }
+  } catch (e) {
+    log('',
+        error:
+            '[api_call][readregisterByCategory] error value ${e.toString()}');
     return [];
   }
 }

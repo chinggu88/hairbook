@@ -51,13 +51,13 @@ void main() {
             binding: BindingsBuilder(() {
               Get.put(BookController());
             })),
-        GetPage(
-            name: profile,
-            page: () => Profile_page(),
-            transition: Transition.noTransition,
-            binding: BindingsBuilder(() {
-              Get.put(ProfileController());
-            })),
+        // GetPage(
+        //     name: profile,
+        //     page: () => Profile_page(),
+        //     transition: Transition.noTransition,
+        //     binding: BindingsBuilder(() {
+        //       Get.put(ProfileController());
+        //     })),
       ],
       builder: EasyLoading.init(),
     ));

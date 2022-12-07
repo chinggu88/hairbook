@@ -3,13 +3,19 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair/controller/register_controller.dart';
+import 'package:hair/model/book_model.dart';
 import 'package:hair/view/common/scafford_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class RegisterPage extends StatelessWidget {
-  var controller = RegisterController.to;
+class RegisterPage extends GetView<RegisterController> {
+  RegisterPage({
+    this.reRegitdata,
+  });
+  book? reRegitdata;
   @override
   Widget build(BuildContext context) {
+    //빠른예약 시 데이터 셋팅
+    Get.arguments != null ? controller.regitvalue(Get.arguments) : null;
     return Scaffoldhair(
       appbar: 1,
       widgetbody: SingleChildScrollView(
