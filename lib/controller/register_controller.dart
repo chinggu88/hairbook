@@ -16,20 +16,7 @@ class RegisterController extends GetxController {
   set selectDate(DateTime value) => _selectDate.value = value;
 
   ///예약가능 여부 시간 순
-  final RxList<bool> _permittime = <bool>[
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ].obs;
+  final RxList<bool> _permittime = <bool>[].obs;
   List<bool> get permittime => _permittime.value;
   set permittime(List<bool> value) => _permittime.assignAll(value);
 
@@ -58,6 +45,15 @@ class RegisterController extends GetxController {
   ///예약 목록
   RxMap<DateTime, List<Map<String, dynamic>>> eventitems =
       <DateTime, List<Map<String, dynamic>>>{}.obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    regittime.forEach((element) {
+      permittime.add(false);
+    });
+  }
 
   @override
   Future<void> onReady() async {
@@ -127,6 +123,8 @@ class RegisterController extends GetxController {
         await readregitlist();
         //화면 갱신
         onclick(selectDate);
+        permitregister(selectDate);
+
         //선택화면 갱신
         regitvalue.clear();
       } else {
@@ -138,10 +136,8 @@ class RegisterController extends GetxController {
   ///예약건수 조회
   Future<void> readregitlist() async {
     log('[등록api][readregitlist] 등록 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
-    String today =
-        '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
     Map<DateTime, List<Map<String, dynamic>>> event =
-        await readregister('/getRegister', {'date': today});
+        await readregister('/getRegister', {'date': dateTostr(DateTime.now())});
     log('[등록api][readregitlist] 등록성공');
     eventitems.addAll(event);
   }

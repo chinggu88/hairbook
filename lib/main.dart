@@ -22,7 +22,7 @@ void main() {
       onInit: () async {
         Intl.defaultLocale = 'ko_KR';
       },
-      initialRoute: home,
+      initialRoute: login,
       initialBinding: initbinding(),
       getPages: [
         GetPage(

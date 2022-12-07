@@ -55,10 +55,7 @@ class RegisterPage extends StatelessWidget {
                   child: GridView.count(
                     childAspectRatio: 1.6,
                     crossAxisCount: 3,
-                    children:
-                        controller.eventitems[controller.selectDate] != null
-                            ? Schecdulelist(controller.eventitems)
-                            : [],
+                    children: Schecdulelist(controller.eventitems),
                   ),
                 );
               }),

@@ -12,31 +12,30 @@ class BookPage extends GetView<BookController> {
   Widget build(BuildContext context) {
     return Scaffoldhair(
       widgetbody: Flexible(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Obx(() {
-              log('[REGISTERPAGE] ${controller.eventitems.length}');
-              log('[BOOKRPAGE] ${controller.onclick}');
-              return calendar();
-            }),
-            const SizedBox(height: 8.0),
-            Obx(() {
-              log('[REGISTERPAGE] ${controller.eventitems.length}');
-              log('[BOOKRPAGE] ${controller.selectDate}');
-              return SizedBox(
-                height: 150,
-                child: GridView.count(
-                  childAspectRatio: 1.6,
-                  crossAxisCount: 3,
-                  children:
-                      controller.eventitems[controller.selectDate.value] != null
-                          ? Schecdulelist(controller.eventitems)
-                          : [],
-                ),
-              );
-            }),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Obx(() {
+                log('[REGISTERPAGE] ${controller.eventitems.length}');
+                log('[BOOKRPAGE] ${controller.onclick}');
+                return calendar();
+              }),
+              const SizedBox(height: 8.0),
+              Obx(() {
+                log('[REGISTERPAGE] ${controller.eventitems.length}');
+                log('[REGISTERPAGE] ${controller.permittime}');
+                return Expanded(
+                  child: GridView.count(
+                    childAspectRatio: 1.6,
+                    crossAxisCount: 3,
+                    children: Schecdulelist(controller.eventitems),
+                  ),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );
@@ -55,6 +54,9 @@ class BookPage extends GetView<BookController> {
       focusedDay: controller.onclick.value,
       onDaySelected: (selectedDay, focusedDay) {
         controller.onclick.value = selectedDay;
+        controller.permitregister(selectedDay);
+        controller.selectDate =
+            DateTime.utc(selectedDay.year, selectedDay.month, selectedDay.day);
       },
       selectedDayPredicate: (day) {
         return controller.onclick.value == day;
@@ -90,23 +92,23 @@ class BookPage extends GetView<BookController> {
               )),
               controller.eventitems[dateTime] != null
                   ? Container(
-                      height: 15,
-                      width: 15,
+                      height: 20,
+                      width: 20,
                       color: Colors.blueAccent,
                       child: Text(
-                        '${controller.eventitems[dateTime]?.length.toString()}',
+                        '${(12 - controller.eventitems[dateTime]!.length)}',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
                     )
                   : Container(
-                      height: 15,
-                      width: 15,
+                      height: 20,
+                      width: 20,
                       color: Colors.blueAccent,
                       child: Text(
-                        '0',
+                        '${controller.regittime.length}',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     )
             ],
@@ -123,23 +125,23 @@ class BookPage extends GetView<BookController> {
               )),
               controller.eventitems[dateTime] != null
                   ? Container(
-                      height: 15,
-                      width: 15,
+                      height: 20,
+                      width: 20,
                       color: Colors.blueAccent,
                       child: Text(
-                        '${controller.eventitems[dateTime]?.length.toString()}',
+                        '${(12 - controller.eventitems[dateTime]!.length)}',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     )
                   : Container(
-                      height: 15,
-                      width: 15,
+                      height: 20,
+                      width: 20,
                       color: Colors.blueAccent,
                       child: Text(
-                        '0',
+                        '${controller.regittime.length}',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     )
             ],
@@ -163,21 +165,21 @@ class BookPage extends GetView<BookController> {
               ),
               controller.eventitems[dateTime] != null
                   ? Container(
-                      height: 15,
-                      width: 15,
+                      height: 20,
+                      width: 20,
                       color: Colors.blueAccent,
                       child: Text(
-                        '${controller.eventitems[dateTime]?.length.toString()}',
+                        '${(12 - controller.eventitems[dateTime]!.length)}',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
                     )
                   : Container(
-                      height: 15,
-                      width: 15,
+                      height: 20,
+                      width: 20,
                       color: Colors.blueAccent,
                       child: Text(
-                        '0',
+                        '${controller.regittime.length}',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),
@@ -191,10 +193,9 @@ class BookPage extends GetView<BookController> {
 
   ///등록 상세내역
   List<Widget> Schecdulelist(Map<DateTime, List<Map<String, dynamic>>> event) {
-    log('asdf selectDate ${controller.selectDate} :: ${controller.regittime.length} :: ${controller.eventitems[controller.selectDate]![0]['typeName'].toString()}');
     List<Widget> reWidget = [];
-    controller.eventitems[DateTime.now()] == null ? Container() : Container();
     for (int i = 0; i < controller.regittime.length; i++) {
+      print('asdf ${controller.selectDate}');
       reWidget.add(GestureDetector(
         onTap: () {},
         child: Container(

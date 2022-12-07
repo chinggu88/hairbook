@@ -199,8 +199,10 @@ class LoginController extends GetxController {
     log('[Login][autologin] 자동 로그인 실행');
     bool isinit = await AppController.to.storage.initStorage;
     try {
-      String id = AppController.to.storage.read("id");
-      String uid = AppController.to.storage.read("uid");
+      // String id = AppController.to.storage.read("id");
+      // String uid = AppController.to.storage.read("uid");
+      String id = 'chinggu88@gmail.com';
+      String uid = '8GPdL9fxC5RW1OP2bQqwbCajt6n2';
       //아이디랑 uid 정보가 있을때
       if (id != '' && uid != '') {
         Map<String, dynamic> body = {"id": id, "uid": uid};
