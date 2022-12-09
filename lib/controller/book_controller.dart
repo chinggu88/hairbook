@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:hair/common/api/api_call.dart';
+import 'package:hair/common/util/function.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BookController extends GetxController {
@@ -84,11 +85,9 @@ class BookController extends GetxController {
   ///예약건수 조회
   Future<void> readregitlist() async {
     log('[등록api][readregitlist] 등록 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
-    String today =
-        '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
     Map<DateTime, List<Map<String, dynamic>>> event =
-        await readregister('/getRegister', {'date': today});
-    log('[등록api][readregitlist] 등록성공');
+        await readregister('/getRegister', {'date': dateTostr(DateTime.now())});
+    log('[등록api][readregitlist] 등록성공 ${event}');
     eventitems.addAll(event);
   }
 }

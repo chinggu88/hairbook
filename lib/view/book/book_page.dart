@@ -17,23 +17,17 @@ class BookPage extends GetView<BookController> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Obx(() {
-                log('[REGISTERPAGE] ${controller.eventitems.length}');
-                log('[BOOKRPAGE] ${controller.onclick}');
-                return calendar();
-              }),
+              calendar(),
               const SizedBox(height: 8.0),
-              Obx(() {
-                log('[REGISTERPAGE] ${controller.eventitems.length}');
-                log('[REGISTERPAGE] ${controller.permittime}');
-                return Expanded(
+              Obx(
+                () => Expanded(
                   child: GridView.count(
                     childAspectRatio: 1.6,
                     crossAxisCount: 3,
                     children: Schecdulelist(controller.eventitems),
                   ),
-                );
-              }),
+                ),
+              ),
             ],
           ),
         ),
@@ -41,153 +35,158 @@ class BookPage extends GetView<BookController> {
     );
   }
 
-  Widget calendar() {
-    return TableCalendar(
-      firstDay: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day),
-      lastDay: DateTime(
-          DateTime.now().year, DateTime.now().month + 3, DateTime.now().day),
-      calendarFormat: controller.calendarFormat,
-      onFormatChanged: (format) {
-        controller.calendarFormat = format;
-      },
-      focusedDay: controller.onclick.value,
-      onDaySelected: (selectedDay, focusedDay) {
-        controller.onclick.value = selectedDay;
-        controller.permitregister(selectedDay);
-        controller.selectDate =
-            DateTime.utc(selectedDay.year, selectedDay.month, selectedDay.day);
-      },
-      selectedDayPredicate: (day) {
-        return controller.onclick.value == day;
-      },
-      eventLoader: (day) {
-        return controller.eventitems[day] ?? [];
-      },
-      calendarStyle: const CalendarStyle(
-        markersMaxCount: 0,
-        todayDecoration:
-            BoxDecoration(color: Color(0xFF5C6BC0), shape: BoxShape.rectangle),
-        selectedDecoration:
-            BoxDecoration(color: Color(0xFF5C6BC0), shape: BoxShape.rectangle),
-      ),
-      calendarBuilders: CalendarBuilders(
-        todayBuilder: (context, dateTime, focusedDay) {
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Center(
-                  child: Container(
-                width: 50,
-                height: 40,
-                color: Colors.amberAccent,
-                child: Center(
-                  child: Text(
-                    dateTime.day.toString(),
-                    style: const TextStyle(
-                      fontSize: 20,
+  Obx calendar() {
+    return Obx(
+      () {
+        log(' ${controller.eventitems.length}');
+        return TableCalendar(
+          firstDay: DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day),
+          lastDay: DateTime(DateTime.now().year, DateTime.now().month + 3,
+              DateTime.now().day),
+          calendarFormat: controller.calendarFormat,
+          onFormatChanged: (format) {
+            controller.calendarFormat = format;
+          },
+          focusedDay: controller.onclick.value,
+          onDaySelected: (selectedDay, focusedDay) {
+            controller.onclick.value = selectedDay;
+            controller.permitregister(selectedDay);
+            controller.selectDate = DateTime.utc(
+                selectedDay.year, selectedDay.month, selectedDay.day);
+          },
+          selectedDayPredicate: (day) {
+            return controller.onclick.value == day;
+          },
+          eventLoader: (day) {
+            return controller.eventitems[day] ?? [];
+          },
+          calendarStyle: const CalendarStyle(
+            markersMaxCount: 0,
+            todayDecoration: BoxDecoration(
+                color: Color(0xFF5C6BC0), shape: BoxShape.rectangle),
+            selectedDecoration: BoxDecoration(
+                color: Color(0xFF5C6BC0), shape: BoxShape.rectangle),
+          ),
+          calendarBuilders: CalendarBuilders(
+            todayBuilder: (context, dateTime, focusedDay) {
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Center(
+                      child: Container(
+                    width: 50,
+                    height: 40,
+                    color: Colors.amberAccent,
+                    child: Center(
+                      child: Text(
+                        dateTime.day.toString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )),
-              controller.eventitems[dateTime] != null
-                  ? Container(
-                      height: 20,
-                      width: 20,
-                      color: Colors.blueAccent,
-                      child: Text(
-                        '${(12 - controller.eventitems[dateTime]!.length)}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
-                  : Container(
-                      height: 20,
-                      width: 20,
-                      color: Colors.blueAccent,
-                      child: Text(
-                        '${controller.regittime.length}',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    )
-            ],
-          );
-        },
-        defaultBuilder: (context, dateTime, _) {
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Center(
-                  child: Text(
-                dateTime.day.toString(),
-                style: TextStyle(fontSize: 20),
-              )),
-              controller.eventitems[dateTime] != null
-                  ? Container(
-                      height: 20,
-                      width: 20,
-                      color: Colors.blueAccent,
-                      child: Text(
-                        '${(12 - controller.eventitems[dateTime]!.length)}',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    )
-                  : Container(
-                      height: 20,
-                      width: 20,
-                      color: Colors.blueAccent,
-                      child: Text(
-                        '${controller.regittime.length}',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    )
-            ],
-          );
-        },
-        selectedBuilder: (context, dateTime, focusedDay) {
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Center(
-                child: Container(
-                  width: 50,
-                  height: 40,
-                  color: Colors.amberAccent,
-                  child: Center(
+                  )),
+                  controller.eventitems[dateTime] != null
+                      ? Container(
+                          height: 20,
+                          width: 20,
+                          color: Colors.blueAccent,
+                          child: Text(
+                            '${(12 - controller.eventitems[dateTime]!.length)}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : Container(
+                          height: 20,
+                          width: 20,
+                          color: Colors.blueAccent,
+                          child: Text(
+                            '${controller.regittime.length}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        )
+                ],
+              );
+            },
+            defaultBuilder: (context, dateTime, _) {
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Center(
                       child: Text(
                     dateTime.day.toString(),
                     style: TextStyle(fontSize: 20),
                   )),
-                ),
-              ),
-              controller.eventitems[dateTime] != null
-                  ? Container(
-                      height: 20,
-                      width: 20,
-                      color: Colors.blueAccent,
-                      child: Text(
-                        '${(12 - controller.eventitems[dateTime]!.length)}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
-                  : Container(
-                      height: 20,
-                      width: 20,
-                      color: Colors.blueAccent,
-                      child: Text(
-                        '${controller.regittime.length}',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
-            ],
-          );
-        },
-      ),
+                  controller.eventitems[dateTime] != null
+                      ? Container(
+                          height: 20,
+                          width: 20,
+                          color: Colors.blueAccent,
+                          child: Text(
+                            '${(12 - controller.eventitems[dateTime]!.length)}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : Container(
+                          height: 20,
+                          width: 20,
+                          color: Colors.blueAccent,
+                          child: Text(
+                            '${controller.regittime.length}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        )
+                ],
+              );
+            },
+            selectedBuilder: (context, dateTime, focusedDay) {
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 50,
+                      height: 40,
+                      color: Colors.amberAccent,
+                      child: Center(
+                          child: Text(
+                        dateTime.day.toString(),
+                        style: TextStyle(fontSize: 20),
+                      )),
+                    ),
+                  ),
+                  controller.eventitems[dateTime] != null
+                      ? Container(
+                          height: 20,
+                          width: 20,
+                          color: Colors.blueAccent,
+                          child: Text(
+                            '${(12 - controller.eventitems[dateTime]!.length)}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : Container(
+                          height: 20,
+                          width: 20,
+                          color: Colors.blueAccent,
+                          child: Text(
+                            '${controller.regittime.length}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                ],
+              );
+            },
+          ),
+        );
+      },
     );
   }
 

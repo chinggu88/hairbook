@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hair/common/const/appPage.dart';
 import 'package:hair/common/util/function.dart';
 import 'package:hair/controller/home_controller.dart';
-import 'package:hair/controller/register_controller.dart';
 import 'package:hair/view/common/scafford_page.dart';
 
 class Home_page extends GetView<homeController> {
@@ -30,18 +29,12 @@ class Home_page extends GetView<homeController> {
                   height: 20,
                 ),
                 //예약현황
-                Obx(() {
-                  log('${controller.eventlist.length}');
-                  return recentbook();
-                }),
+                Obx(() => recentbook()),
                 SizedBox(
                   height: 20,
                 ),
                 //예약히스토리
-                Obx(() {
-                  log('${controller.historylist.length}');
-                  return bookhisyory();
-                }),
+                Obx(() => bookhisyory()),
               ],
             ),
           ),
@@ -179,6 +172,7 @@ class Home_page extends GetView<homeController> {
     return Container(
       height: 120,
       child: ListView(
+        reverse: true,
         // padding: EdgeInsets.all(8.0),
         shrinkWrap: true,
         children: list,

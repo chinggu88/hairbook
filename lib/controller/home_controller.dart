@@ -28,9 +28,10 @@ class homeController extends GetxController {
     log('[등록api][readregitlistByid] 등록 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
     List<book> event = await readregisterByid(
         '/getRegisterByid', {'id': AppController.to.user.id});
-    log('[등록api][readregitlistByid] 등록성공 ${event}');
+    log('[등록api][readregitlistByid]  ${event}');
     event.forEach((e) {
       if (diffDate(e.date!) <= 0) {
+        log('asfd ${e.date}');
         eventlist.add(e);
       }
     });
@@ -42,7 +43,7 @@ class homeController extends GetxController {
     log('[등록api][readregitlistByCategory] 등록 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
     List<book> event = await readregisterByCategory(
         '/gethistoryCategory', {'id': AppController.to.user.id});
-    log('[등록api][readregitlistByCategory] 등록성공 ${event}');
+    log('[등록api][readregitlistByCategory]  ${event}');
     historylist.addAll(event);
   }
 }
