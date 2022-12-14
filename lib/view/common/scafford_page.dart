@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hair/common/const/appPage.dart';
+import 'package:hair/common/const/themes.dart';
 import 'package:hair/controller/app_controller.dart';
 
 class Scaffoldhair extends StatelessWidget {
@@ -28,8 +32,9 @@ class Scaffoldhair extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: showappbar ? appbartitle(appbar) : appbartitle(99),
+      backgroundColor: Theme.of(context).backgroundColor,
+      appBar:
+          showappbar ? appbartitle(appbar, context) : appbartitle(99, context),
       body: Column(
         children: [
           pagenavigation(shownavigation),
@@ -40,12 +45,12 @@ class Scaffoldhair extends StatelessWidget {
   }
 
   ///앱바 설정
-  PreferredSizeWidget appbartitle(int appbar) {
+  PreferredSizeWidget appbartitle(int appbar, BuildContext context) {
     switch (appbar) {
       case 1:
         return AppBar(
           elevation: 0,
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: Theme.of(context).backgroundColor,
           leading: IconButton(
               icon: Icon(Icons.arrow_back_ios_new),
               onPressed: (() {
@@ -56,7 +61,7 @@ class Scaffoldhair extends StatelessWidget {
       default:
         return AppBar(
           elevation: 0,
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: Theme.of(context).backgroundColor,
           leading: Icon(
             Icons.ice_skating,
             size: 40,
@@ -71,7 +76,20 @@ class Scaffoldhair extends StatelessWidget {
           ),
           centerTitle: false,
           actions: [
-            Icon(Icons.dark_mode_rounded),
+            IconButton(
+                icon: Get.isDarkMode
+                    ? const Icon(Icons.light_mode)
+                    : const Icon(Icons.dark_mode),
+                onPressed: (() {
+                  log('asdf ${Get.isDarkMode}');
+                  Get.isDarkMode
+                      ? Get.changeTheme(Themes.themelight)
+                      : Get.changeTheme(Themes.themedark);
+                  log('asdf ${Get.isDarkMode}');
+                  // Pref().writePref('darkmode', !Get.isDarkMode);
+                  GetStorage().write('darkmode', !Get.isDarkMode);
+                  log('asdf ${GetStorage().read('darkmode')}');
+                })),
             SizedBox(
               width: 10,
             )

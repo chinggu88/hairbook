@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair/common/const/appPage.dart';
 import 'package:hair/common/util/function.dart';
+import 'package:hair/controller/app_controller.dart';
 import 'package:hair/controller/home_controller.dart';
 import 'package:hair/view/common/scafford_page.dart';
 
@@ -79,7 +80,7 @@ class Home_page extends GetView<homeController> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Text(
-                      '이강훈님',
+                      '${AppController.to.user.name}',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           fontSize: 20,
@@ -90,7 +91,7 @@ class Home_page extends GetView<homeController> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
-                      'chinggu88@gmail.com',
+                      '${AppController.to.user.id}',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           fontSize: 15,
@@ -146,7 +147,7 @@ class Home_page extends GetView<homeController> {
                     width: 10,
                   ),
                   Text(
-                    '예약정보',
+                    diffDate(e.date!) == 0 ? '오늘' : ' ${diffDate(e.date!)}일후',
                     style: TextStyle(
                         fontSize: 20,
                         fontFamily: 'BMHANNAAir',
@@ -154,9 +155,20 @@ class Home_page extends GetView<homeController> {
                         color: Colors.white),
                   ),
                   Text(
-                    diffDate(e.date!) == 0 ? '오늘' : '${diffDate(e.date!)}일후',
+                    '${strToKorDate(e.date!)}',
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
+                        fontFamily: 'BMHANNAAir',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    e.confirm == 'N' ? '예약획인중' : '예약완료',
+                    style: TextStyle(
+                        fontSize: 15,
                         fontFamily: 'BMHANNAAir',
                         fontWeight: FontWeight.bold,
                         color: Colors.white),

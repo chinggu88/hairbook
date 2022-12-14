@@ -38,19 +38,4 @@ class AppController extends GetxController {
     );
     await getserverUrl();
   }
-
-  //100000 to 10,000
-  String toComma(int value) {
-    return value.toString().replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
-  }
-
-  //map eqults to map
-  bool mapEquals(Map<String, dynamic> a, Map<String, dynamic> b) {
-    if (a.length != b.length) return false;
-    for (var key in a.keys) {
-      if (a[key] != b[key]) return false;
-    }
-    return true;
-  }
 }

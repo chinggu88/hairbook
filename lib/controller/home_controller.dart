@@ -19,8 +19,8 @@ class homeController extends GetxController {
   Future<void> onReady() async {
     // TODO: implement onReady
     super.onReady();
-    readregitlistByid();
-    readregitlistByCategory();
+    await readregitlistByid();
+    await readregitlistByCategory();
   }
 
   ///예약건수 조회
@@ -30,7 +30,7 @@ class homeController extends GetxController {
         '/getRegisterByid', {'id': AppController.to.user.id});
     log('[등록api][readregitlistByid]  ${event}');
     event.forEach((e) {
-      if (diffDate(e.date!) <= 0) {
+      if (diffDate(e.date!) >= 0) {
         log('asfd ${e.date}');
         eventlist.add(e);
       }

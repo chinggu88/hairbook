@@ -67,6 +67,7 @@ class BookController extends GetxController {
 
   ///등록데이터 갱신
   void permitregister(DateTime date) {
+    log('[등록api][permitregister] 등록 value ${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
     List<bool> temp = [];
     if (eventitems[date] != null) {
       for (int i = 0; i < regittime.length; i++) {
@@ -80,6 +81,7 @@ class BookController extends GetxController {
       }
     }
     _permittime.assignAll(temp);
+    log('[등록api][permitregister] 등록성공 ${_permittime}');
   }
 
   ///예약건수 조회

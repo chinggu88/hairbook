@@ -29,5 +29,13 @@ DateTime strToDateTime(String time) {
 int diffDate(String date) {
   DateTime today = DateTime.now();
   DateTime start = DateTime.parse(date);
-  return today.difference(start).inDays;
+  return start.difference(today).inDays;
+}
+
+///String > YYYY년 MM월 DD일
+String strToKorDate(String time) {
+  String year = time.substring(0, 4);
+  String month = time.substring(4, 6);
+  String day = time.substring(6, 8);
+  return '${year}년 ${month}월 ${day}일';
 }

@@ -347,42 +347,45 @@ class RegisterPage extends GetView<RegisterController> {
     List<Widget> reWidget = [];
     controller.eventitems[DateTime.now()] == null ? Container() : Container();
     for (int i = 0; i < controller.regittime.length; i++) {
-      reWidget.add(GestureDetector(
-        onTap: () {
-          if (!controller.permittime[i]) {
-            controller.selectvalue("time", controller.regittime[i]);
-          } else {
-            Get.snackbar('주의', '이미 예약이 존재합니다.');
-          }
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: controller.permittime[i] ? Colors.grey : Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-                color: controller.regitvalue['time'] ==
-                        controller.regittime[i].toString()
-                    ? Colors.black
-                    : Colors.white,
-                width: 5),
+      if (!controller.permittime[i]) {
+        reWidget.add(GestureDetector(
+          onTap: () {
+            if (!controller.permittime[i]) {
+              controller.selectvalue("time", controller.regittime[i]);
+            } else {
+              Get.snackbar('주의', '이미 예약이 존재합니다.');
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                  color: controller.regitvalue['time'] ==
+                          controller.regittime[i].toString()
+                      ? Colors.black
+                      : Colors.white,
+                  width: 5),
+            ),
+            child: Column(
+              children: [
+                Text(controller.regittime[i].toString()),
+                if (controller.permittime[i]) ...[
+                  Text(controller.eventitems[controller.selectDate]![0]
+                          ['typeName']
+                      .toString()),
+                  Text(controller.eventitems[controller.selectDate]![0]
+                          ['managerName']
+                      .toString()),
+                  Text(controller.eventitems[controller.selectDate]![0]
+                          ['confirm']
+                      .toString()),
+                ]
+              ],
+            ),
           ),
-          child: Column(
-            children: [
-              Text(controller.regittime[i].toString()),
-              if (controller.permittime[i]) ...[
-                Text(controller.eventitems[controller.selectDate]![0]
-                        ['typeName']
-                    .toString()),
-                Text(controller.eventitems[controller.selectDate]![0]
-                        ['managerName']
-                    .toString()),
-                Text(controller.eventitems[controller.selectDate]![0]['confirm']
-                    .toString()),
-              ]
-            ],
-          ),
-        ),
-      ));
+        ));
+      }
     }
 
     return reWidget;

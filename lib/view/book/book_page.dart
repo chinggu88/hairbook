@@ -22,7 +22,7 @@ class BookPage extends GetView<BookController> {
               Obx(
                 () => Expanded(
                   child: GridView.count(
-                    childAspectRatio: 1.6,
+                    childAspectRatio: 1.5,
                     crossAxisCount: 3,
                     children: Schecdulelist(controller.eventitems),
                   ),
@@ -212,8 +212,12 @@ class BookPage extends GetView<BookController> {
                 Text(controller.eventitems[controller.selectDate]![0]
                         ['managerName']
                     .toString()),
-                Text(controller.eventitems[controller.selectDate]![0]['confirm']
-                    .toString()),
+                controller.eventitems[controller.selectDate]![0]['confirm'] ==
+                        'N'
+                    ? Text('예약중..')
+                    : Text('예약확정'),
+              ] else ...[
+                Text('예약 가능'),
               ]
             ],
           ),
