@@ -390,4 +390,7 @@ class RegisterPage extends GetView<RegisterController> {
 
     return reWidget;
   }
+
+  //test Widget
+
 }

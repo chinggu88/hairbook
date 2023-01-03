@@ -39,3 +39,16 @@ String strToKorDate(String time) {
   String day = time.substring(6, 8);
   return '${year}년 ${month}월 ${day}일';
 }
+
+
+
+/// get the today use datetime
+DateTime getToday() {
+  DateTime today = DateTime.now();
+  return DateTime(today.year, today.month, today.day);
+}
+
+///a날짜와 b날짜 사이에 c가 포함되는지 확인
+bool isBetween(DateTime a, DateTime b, DateTime c) {
+  return a.isBefore(c) && b.isAfter(c);
+}

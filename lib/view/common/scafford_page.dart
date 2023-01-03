@@ -81,14 +81,11 @@ class Scaffoldhair extends StatelessWidget {
                     ? const Icon(Icons.light_mode)
                     : const Icon(Icons.dark_mode),
                 onPressed: (() {
-                  log('asdf ${Get.isDarkMode}');
                   Get.isDarkMode
                       ? Get.changeTheme(Themes.themelight)
                       : Get.changeTheme(Themes.themedark);
-                  log('asdf ${Get.isDarkMode}');
                   // Pref().writePref('darkmode', !Get.isDarkMode);
                   GetStorage().write('darkmode', !Get.isDarkMode);
-                  log('asdf ${GetStorage().read('darkmode')}');
                 })),
             SizedBox(
               width: 10,

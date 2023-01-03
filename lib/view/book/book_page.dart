@@ -19,15 +19,17 @@ class BookPage extends GetView<BookController> {
             children: [
               calendar(),
               const SizedBox(height: 8.0),
-              Obx(
-                () => Expanded(
-                  child: GridView.count(
-                    childAspectRatio: 1.5,
-                    crossAxisCount: 3,
-                    children: Schecdulelist(controller.eventitems),
-                  ),
-                ),
-              ),
+              Expanded(child: test())
+
+              // Obx(
+              //   () => Expanded(
+              //     child: GridView.count(
+              //       childAspectRatio: 1.5,
+              //       crossAxisCount: 3,
+              //       children: Schecdulelist(controller.eventitems),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -226,5 +228,28 @@ class BookPage extends GetView<BookController> {
     }
 
     return reWidget;
+  }
+
+  Widget test() {
+    return Row(
+      children: [
+        Container(
+          color: Colors.red,
+          height: 120,
+          width: 100,
+          child: Text('10:00'),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: Container(
+            color: Colors.red,
+            height: 120,
+            width: 40,
+          ),
+        ),
+      ],
+    );
   }
 }
